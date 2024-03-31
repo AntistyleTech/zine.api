@@ -3,6 +3,8 @@ FROM php:8.3-cli as base
 ARG UID=1000
 ARG GID=1000
 
+ARG SUPERVISOR_PHP_COMMAND
+
 ARG NODE_VERSION=21
 
 RUN apt-get update \
@@ -48,9 +50,9 @@ COPY --chown=www-data . .
 
 RUN chmod -R 775 bootstrap/cache storage
 
-COPY docker/app/base-install /usr/local/bin/base-install
-RUN chmod +x /usr/local/bin/base-install
-RUN ["base-install"]
+#COPY docker/app/base-install /usr/local/bin/base-install
+#RUN chmod +x /usr/local/bin/base-install
+#RUN ["base-install"]
 
 FROM base AS local
 
@@ -59,14 +61,12 @@ RUN pecl install xdebug \
 
 COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
 
-FROM local AS local-server
-
-ENV SUPERVISOR_PHP_COMMAND="php -d variables_order=EGPCS /var/www/html/artisan octane:start --host=0.0.0.0 --port=8000 --watch"
 ENV SUPERVISOR_PHP_USER=www-data
+ENV SUPERVISOR_PHP_COMMAND=$SUPERVISOR_PHP_COMMAND
 
-COPY docker/app/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/app/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # Build stage
 FROM base AS production
