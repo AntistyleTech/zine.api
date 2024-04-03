@@ -16,3 +16,5 @@
 .gitignore
 compose.*.yaml
 Dockerfile
+.npm
+.composer

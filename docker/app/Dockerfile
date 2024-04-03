@@ -36,9 +36,12 @@ RUN pecl install \
 
 WORKDIR var/www/html
 
+RUN usermod -u ${UID} www-data
+RUN groupmod -g ${GID} www-data
+RUN usermod -d /var/www www-data
+
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -; \
-    apt-get install -y nodejs \
-    && npm install npm
+    apt-get install -y nodejs
 
 ENV OPCACHE_ENABLE=disable
 ENV OPCACHE_ENABLE_CLI=0
@@ -57,9 +60,6 @@ RUN pecl install xdebug \
 COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
 
 FROM xdebug AS local
-
-RUN usermod -u ${UID} www-data
-RUN groupmod -g ${GID} www-data
 
 COPY --chown=www-data . .
 
