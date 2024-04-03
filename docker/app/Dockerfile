@@ -5,7 +5,7 @@ ARG GID=1000
 
 ARG SUPERVISOR_PHP_COMMAND
 
-ARG NODE_VERSION=21
+ARG NODE_VERSION=20
 
 RUN apt-get update \
     && apt-get install -y  \
@@ -17,6 +17,8 @@ RUN apt-get update \
     git \
     libpq-dev \
     procps \
+    && apt-get -y autoremove \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pecl install \
@@ -36,7 +38,7 @@ WORKDIR var/www/html
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -; \
     apt-get install -y nodejs \
-    && npm install -g npm
+    && npm install npm
 
 ENV OPCACHE_ENABLE=disable
 ENV OPCACHE_ENABLE_CLI=0
@@ -47,6 +49,15 @@ COPY docker/app/conf.d/opcache.ini $PHP_INI_DIR/conf.d/opcache.ini
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+FROM base AS xdebug
+
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
+
+FROM xdebug AS local
+
 RUN usermod -u ${UID} www-data
 RUN groupmod -g ${GID} www-data
 
@@ -54,18 +65,17 @@ COPY --chown=www-data . .
 
 RUN chmod -R 775 bootstrap/cache storage
 
+COPY docker/app/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-FROM base AS local
+COPY docker/app/local-install /usr/local/bin/local-install
+RUN chmod +x /usr/local/bin/local-install
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+USER www-data
+RUN /usr/local/bin/local-install
 
-COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
-
+USER root
 ENV SUPERVISOR_PHP_USER=www-data
 ENV SUPERVISOR_PHP_COMMAND=$SUPERVISOR_PHP_COMMAND
-
-COPY docker/app/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
