@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/ping', fn () => 'pong');
+Route::get('/ping', fn () => dd(xdebug_info()));
 
 Route::name('auth.')
     ->group(base_path('app/Auth/Http/routes/api.php'));
