@@ -38,10 +38,10 @@ WORKDIR var/www/html
 
 RUN usermod -u ${UID} www-data
 RUN groupmod -g ${GID} www-data
-RUN usermod -d /var/www www-data
 
-RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -; \
-    apt-get install -y nodejs
+RUN mkdir -p /home/www-data
+RUN chown -R www-data /home/www-data
+RUN usermod -d /home/www-data www-data
 
 ENV OPCACHE_ENABLE=disable
 ENV OPCACHE_ENABLE_CLI=0
@@ -61,21 +61,18 @@ COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
 
 FROM xdebug AS local
 
+# Only for chokidar
+# Required for octane --watch option
+RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -; \
+    apt-get install -y nodejs
+
 COPY --chown=www-data . .
 
 RUN chmod -R 775 bootstrap/cache storage
 
-COPY docker/app/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-COPY docker/app/local-install /usr/local/bin/local-install
-RUN chmod +x /usr/local/bin/local-install
-
-USER www-data
-RUN /usr/local/bin/local-install
-
-USER root
 ENV SUPERVISOR_PHP_USER=www-data
 ENV SUPERVISOR_PHP_COMMAND=$SUPERVISOR_PHP_COMMAND
+COPY docker/app/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 

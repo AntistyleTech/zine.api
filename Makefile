@@ -7,17 +7,17 @@ gid=1000
 
 .PHONY: install npm-install artisan-migrate rebuild
 
-install: build up artisan-migrate
+install: up npm-install composer-install rebuild
+
+# Only for chokidar Swoole required
+npm-install:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) npm install
 
 composer-install:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) composer install
 
 composer-update:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) composer update
-
-# Only for chokidar Swoole required
-npm-install:
-	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) npm install
 
 artisan-migrate:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan migrate
