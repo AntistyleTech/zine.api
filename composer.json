@@ -11,9 +11,13 @@
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.12",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "spatie/laravel-data": "^4.5",
+        "spatie/laravel-typescript-transformer": "^2.4"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",

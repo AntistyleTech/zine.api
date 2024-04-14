@@ -47,7 +47,7 @@ ENV OPCACHE_ENABLE=disable
 ENV OPCACHE_ENABLE_CLI=0
 ENV OPCACHE_JIT=tracing
 
-COPY docker/app/php.ini $PHP_INI_DIR/php.ini
+COPY docker/app/conf.d/php.ini $PHP_INI_DIR/php.ini
 COPY docker/app/conf.d/opcache.ini $PHP_INI_DIR/conf.d/opcache.ini
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

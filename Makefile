@@ -9,7 +9,8 @@ gid=1000
 
 install: up npm-install composer-install rebuild
 
-# Only for chokidar Swoole required
+# Only for chokidar
+# Required for octane --watch option
 npm-install:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) npm install
 
@@ -47,7 +48,27 @@ run:
 	@docker compose -f compose.$(env).yaml run --user $(uid):$(gid) $(container) bash
 
 
-.PHONY: network-create
+.PHONY: network-create ide-helper-generate
 
 network-create:
 	@docker network create --driver bridge $(proxy_network) || true
+
+
+.PHONY: ide-helper ide-helper-generate ide-helper-models ide-helper-meta
+
+ide-helper: ide-helper-generate ide-helper-models ide-helper-meta
+
+ide-helper-generate:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan ide-helper:generate
+
+ide-helper-models:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan ide-helper:models -n
+
+ide-helper-meta:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan ide-helper:meta
+
+.PHONY: generate-ts-types
+
+generate-ts-types:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan typescript:transform
+

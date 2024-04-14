@@ -3,30 +3,53 @@
 namespace App\Auth\Http\Controllers;
 
 use App\Auth\Http\Requests\LoginRequest;
-use App\Auth\Http\Requests\LogoutRequest;
-use App\Auth\Http\Requests\MeRequest;
 use App\Auth\Http\Requests\RegisterRequest;
+use App\Auth\Repositories\Data\SearchUser;
+use App\Auth\Services\AuthSessionService;
+use App\Auth\Services\Data\Login;
+use App\Auth\Services\Data\Register;
+use App\Auth\Services\Data\UserData;
+use App\Auth\Services\UserService;
 use App\Controller;
+use Exception;
 
 class AuthController extends Controller
 {
-    public function register(RegisterRequest $request)
-    {
-        return ['register'];
+
+    public function __construct(
+        private readonly AuthSessionService $authService,
+        private readonly UserService $userService
+    ) {
     }
 
-    public function login(LoginRequest $request)
+    public function register(RegisterRequest $request): UserData
     {
-        return ['login'];
+        return $this->userService->register(Register::from($request->validated()));
     }
 
-    public function logout(LogoutRequest $request)
+    /**
+     * @throws Exception
+     */
+    public function login(LoginRequest $request): UserData
     {
-        return ['logout'];
+        $login = Login::from($request->validated());
+
+        $this->authService->login($login);
+
+        return $this->userService->search(SearchUser::from($login));
     }
 
-    public function me(MeRequest $request)
+    public function logout()
     {
-        return ['me'];
+        $this->authService->logout();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function me(): UserData
+    {
+        $me = $this->authService->me();
+        return $me ? UserData::from($me) : throw new \Exception('User not found');
     }
 }

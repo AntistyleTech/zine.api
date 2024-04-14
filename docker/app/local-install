@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-npm install
-composer install
-
-

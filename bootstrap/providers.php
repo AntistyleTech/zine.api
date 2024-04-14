@@ -2,4 +2,5 @@
 
 return [
     App\AppServiceProvider::class,
+
 ];
