@@ -58,7 +58,7 @@ class LoginRequest extends FormRequest
             ]),
             'email' => $email,
             'username' => $username,
-            default => $validated[$key],
+            default => $validated[$key] ?? $default,
         };
     }
 }

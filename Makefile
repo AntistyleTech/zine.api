@@ -67,6 +67,7 @@ ide-helper-models:
 ide-helper-meta:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan ide-helper:meta
 
+
 .PHONY: generate-ts-types
 
 generate-ts-types:

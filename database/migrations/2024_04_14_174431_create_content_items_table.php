@@ -1,7 +1,6 @@
 <?php
 
-use App\Account\Models\Settings;
-use App\Auth\Models\User;
+use App\Content\Models\Content;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('content_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Settings::class, 'current_settings');
+            $table->foreignIdFor(Content::class);
+            $table->json('data');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('content_items');
     }
 };
