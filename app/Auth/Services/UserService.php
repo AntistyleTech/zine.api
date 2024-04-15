@@ -7,8 +7,8 @@ namespace App\Auth\Services;
 use App\Auth\Repositories\Data\CreateUser;
 use App\Auth\Repositories\Data\SearchUser;
 use App\Auth\Repositories\UserRepository;
-use App\Auth\Services\Data\UserData;
 use App\Auth\Services\Data\Register;
+use App\Auth\Services\Data\UserData;
 
 final readonly class UserService
 {
@@ -25,6 +25,7 @@ final readonly class UserService
     public function register(Register $request): UserData
     {
         $user = $this->repository->create(CreateUser::from($request));
+
         // TODO: add confirmation
         return $user;
     }

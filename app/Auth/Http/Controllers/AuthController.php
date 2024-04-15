@@ -15,7 +15,6 @@ use Exception;
 
 class AuthController extends Controller
 {
-
     public function __construct(
         private readonly AuthSessionService $authService,
         private readonly UserService $userService
@@ -50,6 +49,7 @@ class AuthController extends Controller
     public function me(): UserData
     {
         $me = $this->authService->me();
+
         return $me ? UserData::from($me) : throw new \Exception('User not found');
     }
 }

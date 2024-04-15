@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/ping', fn() => [
     'success' => true,
     'data' => 'pong',
-    env('DB_CONNECTION')
+    env('DB_CONNECTION'),
 ]);
 
 // check existing api.php in each module folder by path Module/Http/routes/api.php
@@ -17,4 +17,3 @@ foreach (new DirectoryIterator(base_path('/app')) as $item) {
         }
     }
 }
-

@@ -19,7 +19,7 @@ class LoginRequest extends FormRequest
         $content = null
     ) {
         parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
-        $this->loginRule = new LoginRule();
+        $this->loginRule = new LoginRule;
     }
 
     /**
@@ -39,7 +39,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'login' => ['required', 'string', $this->loginRule],
-            'password' => 'required|string|min:5|max:20'
+            'password' => 'required|string|min:5|max:20',
         ];
     }
 
@@ -54,7 +54,7 @@ class LoginRequest extends FormRequest
             null => array_filter([
                 ...$validated,
                 'email' => $email,
-                'username' => $username
+                'username' => $username,
             ]),
             'email' => $email,
             'username' => $username,

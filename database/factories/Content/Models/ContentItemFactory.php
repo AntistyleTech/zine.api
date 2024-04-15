@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ContentItemFactory extends Factory
 {
     protected $model = ContentItem::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,7 +20,7 @@ class ContentItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'data' => '{}'
+            'data' => '{}',
         ];
     }
 }

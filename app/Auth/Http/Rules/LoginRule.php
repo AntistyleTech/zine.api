@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator;
 
-
 class LoginRule implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
@@ -19,6 +18,7 @@ class LoginRule implements ValidationRule
     public function email(string $value): ?string
     {
         $isEmail = Validator::make(['email' => $value], ['email' => 'email'])->valid();
+
         return $isEmail ? $value : null;
     }
 
@@ -26,6 +26,7 @@ class LoginRule implements ValidationRule
     {
         // TODO: add username check by RegExp
         $isUsername = Validator::make(['username' => $value], ['username' => 'string|min:4|max:25'])->valid();
+
         return $isUsername ? $value : null;
     }
 }

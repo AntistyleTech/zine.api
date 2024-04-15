@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AccountFactory extends Factory
 {
-
     protected $model = Account::class;
 
     /**

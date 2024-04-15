@@ -73,3 +73,5 @@ ide-helper-meta:
 generate-ts-types:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan typescript:transform
 
+# TODO: add pint octane database seeder commands
+

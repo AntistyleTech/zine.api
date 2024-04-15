@@ -15,6 +15,7 @@ final class UserRepository
     public function find(int $id): ?UserData
     {
         $user = User::find($id);
+
         return $user ? UserData::from($user) : null;
     }
 
@@ -24,9 +25,9 @@ final class UserRepository
             return null;
         }
 
-        $user = User::when($request->id, fn (Builder $query) => $query->where('id',$request->id))
+        $user = User::when($request->id, fn(Builder $query) => $query->where('id', $request->id))
             ->when($request->email, fn(Builder $query) => $query->where('email', $request->email))
-            ->when($request->username, fn (Builder $query) => $query->where('username', $request->username))
+            ->when($request->username, fn(Builder $query) => $query->where('username', $request->username))
             ->first();
 
         return $user ? UserData::from($user) : null;
@@ -35,6 +36,7 @@ final class UserRepository
     public function create(CreateUser $request): ?UserData
     {
         $user = User::create($request->toArray());
+
         return $user ? UserData::from($user) : null;
     }
 }
