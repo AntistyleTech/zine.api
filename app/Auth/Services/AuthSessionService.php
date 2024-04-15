@@ -12,6 +12,7 @@ use Illuminate\Contracts\Session\Session;
 
 final readonly class AuthSessionService
 {
+    // TODO: add socialite auth
     public function __construct(
         private AuthManager $auth,
         private Session $session,

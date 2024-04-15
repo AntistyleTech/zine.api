@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Account\Models\Account;
 use App\Auth\Models\User;
+use App\Content\Models\Content;
+use App\Content\Models\ContentItem;
 use Illuminate\Database\Seeder;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,9 +19,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::factory()->count(3)
+            ->has(Account::factory()->count(1)
+                ->has(Content::factory()->count(3)
+                    ->has(ContentItem::factory()->count(3))
+                )
+            )->create();
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Settings::class, 'current_settings');
+            $table->foreignIdFor(Settings::class, 'current_settings')->nullable();
             $table->timestamps();
         });
     }
