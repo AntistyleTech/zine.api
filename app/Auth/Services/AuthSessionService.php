@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Services;
 
+use App\Auth\Exceptions\WrongCredentialsException;
 use App\Auth\Services\Data\Login;
 use Exception;
 use Illuminate\Auth\AuthManager;
@@ -28,7 +29,7 @@ final readonly class AuthSessionService
 
         $this->auth->guard()->attempt($credentials)
             ? $this->session->regenerate()
-            : throw new Exception('Credentials are not attempted');
+            : throw new WrongCredentialsException();
 
         return true;
     }
