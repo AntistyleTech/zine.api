@@ -19,23 +19,23 @@ final class UserRepository
         return $user ? UserData::from($user) : null;
     }
 
-    public function search(SearchUser $request): ?UserData
+    public function search(SearchUser $search): ?UserData
     {
-        if (empty(array_filter($request->toArray()))) {
+        if (empty(array_filter($search->toArray()))) {
             return null;
         }
 
-        $user = User::when($request->id, fn(Builder $query) => $query->where('id', $request->id))
-            ->when($request->email, fn(Builder $query) => $query->where('email', $request->email))
-            ->when($request->username, fn(Builder $query) => $query->where('username', $request->username))
+        $user = User::when($search->id, fn(Builder $query) => $query->where('id', $search->id))
+            ->when($search->email, fn(Builder $query) => $query->where('email', $search->email))
+            ->when($search->username, fn(Builder $query) => $query->where('username', $search->username))
             ->first();
 
         return $user ? UserData::from($user) : null;
     }
 
-    public function create(CreateUser $request): ?UserData
+    public function create(CreateUser $create): ?UserData
     {
-        $user = User::create($request->toArray());
+        $user = User::create($create->toArray());
 
         return $user ? UserData::from($user) : null;
     }

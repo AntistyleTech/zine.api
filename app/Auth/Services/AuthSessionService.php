@@ -5,29 +5,38 @@ declare(strict_types=1);
 namespace App\Auth\Services;
 
 use App\Auth\Exceptions\WrongCredentialsException;
+use App\Auth\Exceptions\WrongGuardException;
 use App\Auth\Services\Data\Login;
-use Exception;
-use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Session\Session;
 
 final readonly class AuthSessionService
 {
-    // TODO: add socialite auth
+    /**
+     * @throws WrongGuardException
+     */
     public function __construct(
-        private AuthManager $auth,
+        private Guard $auth,
         private Session $session,
     ) {
+        if (!$this->auth instanceof StatefulGuard) {
+            throw new WrongGuardException(
+                expected: StatefulGuard::class,
+                provided: $this->auth::class
+            );
+        }
     }
 
     /**
-     * @throws Exception
+     * @throws WrongCredentialsException
      */
     public function login(Login $login): true
     {
         $credentials = array_filter($login->toArray());
 
-        $this->auth->guard()->attempt($credentials)
+        $this->auth->attempt($credentials)
             ? $this->session->regenerate()
             : throw new WrongCredentialsException();
 

@@ -48,7 +48,20 @@ run:
 	@docker compose -f compose.$(env).yaml run --user $(uid):$(gid) $(container) bash
 
 
-.PHONY: network-create ide-helper-generate
+.PHONY: up-all down-all
+
+up-all:
+	@cd ../zine.proxy && make up
+	@cd ../zine.api && make up
+	@cd ../zine.web && make up
+
+down-all:
+	@cd ../zine.proxy && make down
+	@cd ../zine.api && make down
+	@cd ../zine.web && make down
+
+
+.PHONY: network-create
 
 network-create:
 	@docker network create --driver bridge $(proxy_network) || true

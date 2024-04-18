@@ -9,7 +9,7 @@ use Throwable;
 abstract class LogicException extends Exception implements HttpExceptionInterface
 {
     public function __construct(
-        string $message = "LogicException",
+        string $message = 'LogicException',
         protected int $httpCode = 500,
         int $code = 0,
         protected ?Throwable $previous = null

@@ -15,6 +15,8 @@ use Exception;
 
 class AuthController extends Controller
 {
+    // TODO: add socialite auth
+
     public function __construct(
         private readonly AuthSessionService $authService,
         private readonly UserService $userService

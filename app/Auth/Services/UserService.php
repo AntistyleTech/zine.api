@@ -26,7 +26,7 @@ final readonly class UserService
     {
         $user = $this->repository->create(CreateUser::from($request));
 
-        // TODO: add confirmation
+        // TODO: implement confirmation
         return $user;
     }
 
