@@ -88,3 +88,9 @@ generate-ts-types:
 
 # TODO: add pint octane database seeder commands
 
+module=Common
+name=IndexCommon
+
+make-request:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan make:request App/$(module)/Http/Requests/$(name)Request
+

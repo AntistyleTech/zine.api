@@ -7,12 +7,13 @@ namespace App\Auth\Services;
 use App\Auth\Exceptions\WrongCredentialsException;
 use App\Auth\Exceptions\WrongGuardException;
 use App\Auth\Services\Data\Login;
+use App\Auth\Services\Data\UserData;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Session\Session;
 
-final readonly class AuthSessionService
+final readonly class AuthSessionService implements AuthService
 {
     /**
      * @throws WrongGuardException
@@ -48,6 +49,11 @@ final readonly class AuthSessionService
         $this->auth->logout();
         $this->session->invalidate();
         $this->session->regenerateToken();
+    }
+
+    public function user(): ?UserData
+    {
+        return UserData::from($this->me());
     }
 
     public function me(): ?Authenticatable

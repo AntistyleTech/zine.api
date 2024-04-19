@@ -17,7 +17,7 @@ class Content extends Model
         return $this->belongsTo(Account::class);
     }
 
-    public function contentItems(): HasMany
+    public function items(): HasMany
     {
         return $this->hasMany(ContentItem::class);
     }

@@ -2,63 +2,52 @@
 
 namespace App\Content\Http\Controllers;
 
-use App\Content\Models\Content;
-use Illuminate\Http\Request;
+use App\Auth\Services\AuthService;
+use App\Content\Http\Requests\IndexContentRequest;
+use App\Content\Http\Requests\UpdateContentRequest;
+use App\Content\Services\ContentService;
 
 class ContentController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        private readonly ContentService $contentService,
+        private readonly AuthService $auth
+    ) {
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(IndexContentRequest $content)
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreContenRequest $request)
     {
-        //
+        return $this->contentService->create();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Content $content)
+    public function show(int $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Content $content)
-    {
-        //
+        return $this->contentService->read($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Content $content)
+    public function update(UpdateContentRequest $request, int $id)
     {
-        //
+        return $this->contentService->update();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Content $content)
+    public function destroy(int $id)
     {
         //
     }
