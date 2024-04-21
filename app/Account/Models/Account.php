@@ -4,6 +4,7 @@ namespace App\Account\Models;
 
 use App\Auth\Models\User;
 use App\Content\Models\Content;
+use App\Post\Models\Post;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,9 +20,9 @@ class Account extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function contents(): HasMany
+    public function posts(): HasMany
     {
-        return $this->hasMany(Content::class);
+        return $this->hasMany(Post::class);
     }
 
     public function settings(): HasMany
@@ -29,8 +30,8 @@ class Account extends Model
         return $this->hasMany(Settings::class);
     }
 
-    public function currentSettings(): HasOne
+    public function setting(): HasOne
     {
-        return $this->hasOne(Settings::class, 'id', 'current_settings')->ofMany();
+        return $this->hasOne(Settings::class, 'id', 'settings_id')->ofMany();
     }
 }

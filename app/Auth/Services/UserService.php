@@ -4,34 +4,39 @@ declare(strict_types=1);
 
 namespace App\Auth\Services;
 
+use App\Account\Services\AccountService;
 use App\Auth\Repositories\Data\CreateUser;
 use App\Auth\Repositories\Data\SearchUser;
 use App\Auth\Repositories\UserRepository;
 use App\Auth\Services\Data\Register;
 use App\Auth\Services\Data\UserData;
+use Illuminate\Support\Facades\DB;
 
 final readonly class UserService
 {
     public function __construct(
-        private UserRepository $repository
+        private UserRepository $userRepository,
+        private AccountService $accountService
     ) {
     }
 
     public function get(int $id): UserData
     {
-        return $this->repository->find($id);
+        return $this->userRepository->find($id);
     }
 
     public function register(Register $request): UserData
     {
-        $user = $this->repository->create(CreateUser::from($request));
+        $user = $this->userRepository->create(CreateUser::from($request));
+        $this->accountService->create($user);
 
         // TODO: implement confirmation
+
         return $user;
     }
 
     public function search(SearchUser $request): UserData
     {
-        return $this->repository->search($request);
+        return $this->userRepository->search($request);
     }
 }

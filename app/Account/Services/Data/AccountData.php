@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Services\Data;
+namespace App\Account\Services\Data;
 
 use Spatie\LaravelData\Data;
 
-final class UserData extends Data
+final class AccountData extends Data
 {
     public function __construct(
         public int $id,
         public string $name,
-        public string $email,
-        public ?array $data = null
     ) {
     }
 }

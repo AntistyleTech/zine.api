@@ -67,6 +67,18 @@ network-create:
 	@docker network create --driver bridge $(proxy_network) || true
 
 
+.PHONY: octane-start octane-stop octane-reload
+
+octane-start:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan octane:start
+
+octane-stop:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan octane:stop
+
+octane-reload:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan octane:reload
+
+
 .PHONY: ide-helper ide-helper-generate ide-helper-models ide-helper-meta
 
 ide-helper: ide-helper-generate ide-helper-models ide-helper-meta
@@ -86,11 +98,21 @@ ide-helper-meta:
 generate-ts-types:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan typescript:transform
 
-# TODO: add pint octane database seeder commands
+# TODO: add pint database seeder commands
 
 module=Common
 name=IndexCommon
 
-make-request:
-	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan make:request App/$(module)/Http/Requests/$(name)Request
+.PHONY: make-request make-controller
 
+artisan-provider:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan make:provider App/$(module)/Providers/$(name)ServiceProvider
+
+artisan-model:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan make:model App/$(module)/Models/$(name) -m
+
+artisan-controller:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan make:controller App/$(module)/Http/Controllers/$(name)Controller --api
+
+artisan-request:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan make:request App/$(module)/Http/Requests/$(name)Request
