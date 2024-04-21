@@ -12,7 +12,7 @@ final class SearchPosts extends Data
     public function __construct(
         public ?array $username,
         public ?array $categories,
-        public Lang $lang = Lang::English
+//        public Lang $lang = Lang::English
     ) {
     }
 }

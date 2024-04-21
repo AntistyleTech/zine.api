@@ -5,7 +5,7 @@ proxy_network=reverse-proxy
 uid=1000
 gid=1000
 
-.PHONY: install npm-install artisan-migrate rebuild
+.PHONY: install npm-install artisan-migrate artisan-migrate-fresh rebuild
 
 install: up npm-install composer-install rebuild
 
@@ -22,6 +22,9 @@ composer-update:
 
 artisan-migrate:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan migrate
+
+artisan-migrate-fresh:
+	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan migrate:fresh
 
 rebuild:
 	@docker compose -f compose.$(env).yaml up -d --build --force-recreate

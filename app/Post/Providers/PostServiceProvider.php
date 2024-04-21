@@ -3,21 +3,18 @@
 namespace App\Post\Providers;
 
 use App\Post\Http\Controllers\PostController;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-class PostServiceProvider extends ServiceProvider
+class PostServiceProvider extends ServiceProvider implements RouteServiceProvider
 {
-
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
         $this->routes();
     }
 
-    private function routes(): void
+    public function routes(): void
     {
         Route::apiResource('api/post', PostController::class);
     }

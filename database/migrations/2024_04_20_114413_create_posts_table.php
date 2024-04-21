@@ -1,11 +1,13 @@
 <?php
 
+use App\Account\Models\Account;
+use App\Category\Models\Category;
+use App\Content\Services\ContentItemType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Account::class);
+            $table->foreignIdFor(Category::class);
+            $table->string('title')->nullable()->default('No name');
+            $table->enum('type', [
+                ContentItemType::Text->value,
+                ContentItemType::Html->value,
+                ContentItemType::Markdown->value
+            ])->default(ContentItemType::Text);
+            $table->text('content')->nullable()->default('');
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ class PostController extends Controller
     public function index(IndexPostRequest $request)
     {
         $search = SearchPosts::from($request->validated());
+        return $this->postService->search($search);
     }
 
     /**

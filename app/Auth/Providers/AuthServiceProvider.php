@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Auth\Providers;
 
 use App\Auth\Http\Controllers\AuthController;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
-final class AuthServiceProvider extends ServiceProvider
+final class AuthServiceProvider extends ServiceProvider implements RouteServiceProvider
 {
     public function boot(): void
     {
         $this->routes();
     }
 
-    private function routes(): void
+    public function routes(): void
     {
         Route::controller(AuthController::class)
             ->prefix('api/auth')

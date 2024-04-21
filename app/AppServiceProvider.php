@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Providers\LocalServiceProvider;
 use DirectoryIterator;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        foreach ($this->searchAppProviders() as $provider) {
+            $this->app->register($provider);
+        }
     }
 
     /**
@@ -25,8 +26,6 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * TODO: fix or remove auto import
-     *
      * Search service providers by path
      * App/{Module}/Providers/{Module}ServiceProvider.php
      *
@@ -42,9 +41,10 @@ class AppServiceProvider extends ServiceProvider
                 $name = $item->getFilename();
 
                 $providerPath = "{$path}/Providers/{$name}ServiceProvider.php";
+                $providerClass = "App\\{$name}\\Providers\\{$name}ServiceProvider";
 
                 if (file_exists($providerPath)) {
-                    $providers[] = $providerPath;
+                    $providers[] = $providerClass;
                 }
             }
         }

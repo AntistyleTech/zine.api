@@ -1,7 +1,6 @@
 <?php
 
 use App\Category\Models\Category;
-use App\Category\Models\Tag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,18 +12,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->timestamps();
         });
 
-        Schema::create('categorisable', function (Blueprint $table) {
+        Schema::create('taggable', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Category::class);
-            $table->string('categorisable_id');
-            $table->string('categorisable_type');
-            $table->boolean('is_main')->comment('Category is main for categorisable');
+            $table->string('taggable_id');
+            $table->string('taggable_type');
             $table->timestamps();
         });
     }
@@ -34,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
-        Schema::dropIfExists('categorisable');
+        Schema::dropIfExists('tags');
+        Schema::dropIfExists('taggable');
     }
 };

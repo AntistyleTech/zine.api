@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('username')->unique();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Settings::class, 'setting_id')->nullable();
             $table->timestamps();
