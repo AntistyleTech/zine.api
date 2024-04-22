@@ -3,46 +3,37 @@
 namespace App\Category\Http\Controllers;
 
 use App\Category\Http\Requests\CategoryIndexRequest;
+use App\Category\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(CategoryIndexRequest $request)
+    public function __construct(
+        private readonly CategoryService $categoryService
+    ) {
+    }
+
+    public function index(CategoryIndexRequest $request): array
     {
-        //
+        return $this->categoryService->all();
     }
 
     // TODO: implement other routes
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //

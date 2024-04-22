@@ -3,6 +3,7 @@
 namespace App\Category\Providers;
 
 use App\Category\Http\Controllers\CategoryController;
+use App\Category\Http\Controllers\TagController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;

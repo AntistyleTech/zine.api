@@ -11,5 +11,8 @@ interface RouteServiceProvider
 {
     public function boot(): void;
 
+    /**
+     * Register routes
+     */
     public function routes(): void;
 }
