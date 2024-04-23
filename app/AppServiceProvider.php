@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Providers\LocalServiceProvider;
 use DirectoryIterator;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,6 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->register(LocalServiceProvider::class);
+
         foreach ($this->searchAppProviders() as $provider) {
             $this->app->register($provider);
         }
