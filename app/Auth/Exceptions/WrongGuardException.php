@@ -8,7 +8,7 @@ use App\LogicException;
 
 final class WrongGuardException extends LogicException
 {
-    public function __construct(?string $expected = null, ?string $provided = null)
+    public function __construct(string $expected = '', string $provided = '')
     {
         parent::__construct("Wrong Guard expected: {$expected} provided: {$provided}");
     }

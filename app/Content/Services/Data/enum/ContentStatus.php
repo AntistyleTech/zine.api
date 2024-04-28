@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Content\Services;
+namespace App\Content\Services\Data\enum;
 
 enum ContentStatus: string
 {

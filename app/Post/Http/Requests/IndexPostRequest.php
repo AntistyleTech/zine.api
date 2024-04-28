@@ -2,8 +2,8 @@
 
 namespace App\Post\Http\Requests;
 
-use App\Content\Services\ContentType;
-use App\Content\Services\Lang;
+use App\Content\Services\Data\enum\ContentType;
+use App\Content\Services\Data\enum\Lang;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

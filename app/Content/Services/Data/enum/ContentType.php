@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Content\Services;
+namespace App\Content\Services\Data\enum;
 
 enum ContentType: string
 {

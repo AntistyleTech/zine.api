@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Post\Services\Data;
 
-use App\Content\Services\Lang;
 use Spatie\LaravelData\Data;
 
 final class SearchPosts extends Data
