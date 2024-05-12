@@ -35,7 +35,7 @@ final readonly class UserService
         return $user;
     }
 
-    public function search(SearchUser $request): UserData
+    public function search(SearchUser $request): ?UserData
     {
         return $this->userRepository->search($request);
     }

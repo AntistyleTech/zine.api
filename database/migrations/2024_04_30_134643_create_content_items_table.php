@@ -1,7 +1,6 @@
 <?php
 
-use App\Account\Models\Account;
-use App\Category\Models\Category;
+use App\Content\Models\Content;
 use App\Content\Services\Data\enum\ContentItemType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,11 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contents', function (Blueprint $table) {
+        Schema::create('content_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class);
-            $table->foreignIdFor(Category::class);
-            $table->string('title')->nullable()->default('No name');
+            $table->foreignIdFor(Content::class);
+            $table->enum('type', array_map(fn (UnitEnum $type): string => $type->value, ContentItemType::cases()));
+            $table->text('data');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contents');
+        Schema::dropIfExists('content_items');
     }
 };

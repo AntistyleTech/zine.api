@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Account\Repository;
+namespace App\Account\Repositories;
 
 use App\Account\Models\Account;
 use App\Account\Services\Data\AccountData;

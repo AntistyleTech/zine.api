@@ -106,7 +106,7 @@ generate-ts-types:
 module=Common
 name=IndexCommon
 
-.PHONY: make-request make-controller
+.PHONY: artisan-provider artisan-model artisan-controller artisan-request
 
 artisan-provider:
 	@docker compose -f compose.$(env).yaml exec --user $(uid):$(gid) $(container) php artisan make:provider App/$(module)/Providers/$(name)ServiceProvider

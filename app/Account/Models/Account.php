@@ -20,9 +20,9 @@ class Account extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function posts(): HasMany
+    public function contents(): HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Content::class);
     }
 
     public function settings(): HasMany

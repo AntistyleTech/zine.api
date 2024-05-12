@@ -7,7 +7,7 @@ namespace App\Content\Services\Exporters;
 use App\Account\Services\Data\AccountData;
 use App\Content\Services\Data\Content;
 use App\Content\Services\Data\ContentExport;
-use App\ExternalServices\Tumblr\TumblrService;
+use App\Social\Services\Tumblr\TumblrService;
 
 final class TumblrContentExporter implements ContentExporter
 {

@@ -2,7 +2,9 @@
 
 namespace App\Content\Providers;
 
+use App\Content\Http\Controllers\ContentController;
 use App\Content\Http\Controllers\ContentExportController;
+use App\Content\Http\Controllers\ExportTargetController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -21,14 +23,19 @@ class ContentServiceProvider extends ServiceProvider implements RouteServiceProv
 
     public function routes(): void
     {
-        Route::group(['prefix' => 'api/content'], function () {
-            Route::apiResource('api/post', ContentController::class);
-            Route::controller(ContentExportController::class)
-                ->prefix('export')
-                ->group(function () {
-                    Route::get('/target');
-                    Route::post('', 'store');
-                });
+        Route::group(['prefix' => 'api'], function () {
+
+            Route::apiResource('content', ContentController::class);
+
+            Route::apiResource('content/{content}/export', ContentExportController::class)
+                ->only(['index', 'store']);
+
+            Route::apiResource('export', ContentExportController::class)
+                ->only('index');
+
+            Route::apiResource('target', ExportTargetController::class)
+                ->only('index');
+
         });
     }
 }
