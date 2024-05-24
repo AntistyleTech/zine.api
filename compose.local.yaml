@@ -21,7 +21,7 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - '.:/var/www/html'
+      - 'app:/var/www/html'
     depends_on:
       - pgsql
     networks:
@@ -118,6 +118,9 @@ services:
 #      - api
 
 volumes:
+  app:
+    driver: local
+
   pgsql:
     driver: local
 

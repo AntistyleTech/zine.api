@@ -52,22 +52,29 @@ COPY docker/app/conf.d/opcache.ini $PHP_INI_DIR/conf.d/opcache.ini
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-FROM base AS xdebug
+FROM base AS local
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
 
-FROM xdebug AS local
-
 # Only for chokidar
 # Required for octane --watch option
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -; \
     apt-get install -y nodejs
 
+COPY --chown=www-data package.json package.json
+COPY --chown=www-data package-lock.json package-lock.json
+
+RUN npm install -g chokidar
+
 COPY --chown=www-data . .
 
+USER www-data
+RUN composer install --no-interaction
+
+USER root
 RUN chmod -R 775 bootstrap/cache storage
 
 ENV SUPERVISOR_PHP_USER=www-data
