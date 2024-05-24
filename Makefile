@@ -7,7 +7,7 @@ gid=1000
 
 .PHONY: install npm-install artisan-migrate artisan-migrate-fresh rebuild
 
-install: up npm-install composer-install rebuild
+install: up npm-install composer-install restart
 
 # Only for chokidar
 # Required for octane --watch option

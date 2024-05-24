@@ -1,7 +1,5 @@
 name: api-local
 
-version: "3.9"
-
 services:
   app:
     build:
@@ -21,7 +19,7 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - 'app:/var/www/html'
+      - .:/var/www/html
     depends_on:
       - pgsql
     networks:
@@ -118,9 +116,6 @@ services:
 #      - api
 
 volumes:
-  app:
-    driver: local
-
   pgsql:
     driver: local
 
