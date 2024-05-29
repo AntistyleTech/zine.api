@@ -43,16 +43,16 @@ RUN mkdir -p /home/www-data
 RUN chown -R www-data /home/www-data
 RUN usermod -d /home/www-data www-data
 
-ENV OPCACHE_ENABLE=disable
-ENV OPCACHE_ENABLE_CLI=0
-ENV OPCACHE_JIT=tracing
-
 COPY docker/app/conf.d/php.ini $PHP_INI_DIR/php.ini
 COPY docker/app/conf.d/opcache.ini $PHP_INI_DIR/conf.d/opcache.ini
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 FROM base AS local
+
+ENV OPCACHE_ENABLE=disable
+ENV OPCACHE_ENABLE_CLI=0
+ENV OPCACHE_JIT=tracing
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
@@ -64,14 +64,10 @@ COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -; \
     apt-get install -y nodejs
 
-COPY --chown=www-data package.json package.json
-COPY --chown=www-data package-lock.json package-lock.json
-
-RUN npm install -g chokidar
-
 COPY --chown=www-data . .
 
 USER www-data
+RUN npm install
 RUN composer install --no-interaction
 
 USER root
