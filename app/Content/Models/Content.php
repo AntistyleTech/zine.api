@@ -2,10 +2,10 @@
 
 namespace App\Content\Models;
 
-use App\Account\Models\Account;
 use App\Auth\Models\User;
 use App\Category\Models\Category;
 use App\Category\Models\Tag;
+use App\User\Models\Account;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

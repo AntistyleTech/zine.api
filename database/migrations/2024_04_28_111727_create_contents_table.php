@@ -1,8 +1,7 @@
 <?php
 
-use App\Account\Models\Account;
 use App\Category\Models\Category;
-use App\Content\Services\Data\enum\ContentItemType;
+use App\User\Models\Account;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

@@ -18,6 +18,6 @@ final class TumblrContentExporter implements ContentExporter
 
     public function export(AccountData $account, Content $content, mixed $target): ContentExport
     {
-        $this->tumblrService->createPot();
+        $this->tumblrService->createPost();
     }
 }

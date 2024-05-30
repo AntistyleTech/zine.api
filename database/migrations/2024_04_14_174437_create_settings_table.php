@@ -1,6 +1,6 @@
 <?php
 
-use App\Account\Models\Account;
+use App\User\Models\Account;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

@@ -2,10 +2,10 @@
 
 namespace App\Content\Providers;
 
+use App\Common\Providers\RouteServiceProvider;
 use App\Content\Http\Controllers\ContentController;
 use App\Content\Http\Controllers\ContentExportController;
 use App\Content\Http\Controllers\ExportTargetController;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 

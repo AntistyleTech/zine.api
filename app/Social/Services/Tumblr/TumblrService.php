@@ -16,7 +16,7 @@ final class TumblrService
         $this->client = new Client($credentials->key, $credentials->secret);
     }
 
-    public function createPot(string $blogName, $data)
+    public function createPost(string $blogName, $data)
     {
         return $this->client->createPost($blogName, $data);
     }

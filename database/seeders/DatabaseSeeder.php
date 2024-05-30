@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Account\Models\Account;
 use App\Auth\Models\User;
-use App\Content\Models\Content;
 use App\Content\Models\ContentItem;
 use App\Post\Models\Post;
+use App\User\Models\Account;
 use Illuminate\Database\Seeder;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
