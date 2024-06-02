@@ -2,32 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Services;
+namespace App\User\Services;
 
-use App\Account\Services\AccountService;
-use App\Auth\Repositories\Data\CreateUser;
-use App\Auth\Repositories\Data\SearchUser;
-use App\Auth\Repositories\UserRepository;
-use App\Auth\Services\Data\Register;
 use App\Common\Services\UserData;
+use App\User\Domain\Model\User;
+use App\User\Domain\Repositories\UserRepository;
+use App\User\Services\Commands\Register;
 
 final readonly class UserService
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private AccountService $accountService
+        private UserRepository $userRepository
     ) {
     }
 
-    public function get(int $id): UserData
+    public function get(int $id): User
     {
-        return $this->userRepository->find($id);
+        return $this->userRepository->findById($id);
     }
 
-    public function register(Register $request): UserData
+    public function register(Register $request): User
     {
         $user = $this->userRepository->create(CreateUser::from($request));
-        $this->accountService->create($user);
 
         // TODO: implement confirmation
 

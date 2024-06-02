@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\User\Domain\Models;
+namespace App\User\Domain\Model;
 
 use App\Auth\Services\Data\Register;
 use Spatie\LaravelData\Data;
