@@ -15,6 +15,7 @@
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "nwidart/laravel-modules": "*",
         "spatie/laravel-data": "^4.5",
         "tumblr/tumblr": "^0.4.2"
     },
@@ -33,6 +34,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Modules\\": "modules/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -64,6 +66,11 @@
             "dont-discover": [
                 "laravel/telescope"
             ]
+        },
+        "merge-plugin": {
+            "include": [
+                "Modules/*/composer.json"
+            ]
         }
     },
     "config": {
@@ -72,7 +79,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "wikimedia/composer-merge-plugin": true
         }
     },
     "minimum-stability": "stable",

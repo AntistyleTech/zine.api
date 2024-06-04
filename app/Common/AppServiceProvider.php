@@ -14,11 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->register(LocalServiceProvider::class);
-
-        foreach ($this->searchAppProviders() as $provider) {
-            $this->app->register($provider);
-        }
+//        $this->app->register(LocalServiceProvider::class);
+//
+//        foreach ($this->searchAppProviders() as $provider) {
+//            $this->app->register($provider);
+//        }
     }
 
     /**
