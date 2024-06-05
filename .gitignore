@@ -24,3 +24,5 @@ _ide_helper_models.php
 .phpstorm.meta.php
 /resources/types
 /public/vendor/telescope
+modules/Test
+stubs

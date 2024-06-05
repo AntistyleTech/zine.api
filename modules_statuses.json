@@ -1,4 +1,10 @@
 {
     "Posts": true,
-    "Post": true
+    "Post": true,
+    "Users": true,
+    "Social": true,
+    "Categories": true,
+    "User": true,
+    "Test": true,
+    "Category": true
 }
