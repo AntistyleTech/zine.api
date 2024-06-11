@@ -16,6 +16,10 @@ class Account extends Model
 {
 //    use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);

@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace App\Contracts\Auth;
 
-use Spatie\LaravelData\Data;
-
-final class UserData extends Data
+Interface UserData
 {
-    public function __construct(
-        public int $userId,
-        public int $accountId
-    ) {
-    }
+    public function id(): int;
+    //* @var <integer, Role>[] */
+    public function accounts(): array;
 }

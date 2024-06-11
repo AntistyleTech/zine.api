@@ -16,6 +16,11 @@ class Contact extends Model
 {
 //    use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'value',
+    ];
+
 //    /**
 //     * The attributes that are mass assignable.
 //     */

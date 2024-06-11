@@ -15,8 +15,8 @@ use Modules\Category\Http\Controllers\TagController;
  *
 */
 
-Route::apiResource('api/category', CategoryController::class,)
+Route::apiResource('category', CategoryController::class,)
     ->only('index');
 
-Route::apiResource('api/tag', TagController::class,)
+Route::apiResource('tag', TagController::class,)
     ->only('index');

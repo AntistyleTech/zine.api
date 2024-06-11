@@ -5,6 +5,7 @@ namespace Modules\User\Http\Controllers;
 use App\Contracts\Auth\UserData;
 use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Modules\User\Exceptions\WrongCredentialsException;
 use Modules\User\Http\Requests\LoginRequest;
 use Modules\User\Http\Requests\RegisterRequest;
@@ -44,7 +45,7 @@ class AuthController extends Controller
     /**
      * @throws Exception
      */
-    public function login(LoginRequest $request): UserData
+    public function login(LoginRequest $request): User
     {
         $login = Login::from($request->validated());
 
@@ -56,7 +57,7 @@ class AuthController extends Controller
         $this->authService->logout();
     }
 
-    public function user()
+    public function user(): ?Authenticatable
     {
         return $this->authService->user();
     }

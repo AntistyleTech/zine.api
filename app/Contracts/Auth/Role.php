@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace App\Contracts\Auth;
 
-final class Role
-{
+use App\Enum\HasEnumNames;
+use App\Enum\HasEnumValues;
 
+enum Role: string
+{
+    use HasEnumNames, HasEnumValues;
+
+    case Manager = 'Manager';
+    case VerifiedUser = 'VerifiedUser';
+    case User = 'User';
 }

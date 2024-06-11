@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\User\Services;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Modules\User\Exceptions\ContactAlreadyInUse;
 use Modules\User\Exceptions\UsernameAlreadyInUse;
 use Modules\User\Exceptions\UserSavingException;
@@ -21,32 +23,35 @@ final readonly class UserService
      */
     public function create(CreateUser $createUser): User
     {
-        $name = $createUser->name;
-        $user = User::where('name', $name)->first();
-        if ($user !== null) {
-            throw new UsernameAlreadyInUse($name);
-        }
+        return DB::transaction(function () use ($createUser): User {
+            $name = $createUser->name;
+            $user = User::where('name', $name)->first();
+            if ($user !== null) {
+                throw new UsernameAlreadyInUse($name);
+            }
 
-        $account = Account::where('name', $name)->first();
-        if ($account !== null) {
-            throw new UsernameAlreadyInUse($name);
-        }
+            $account = Account::where('name', $name)->first();
+            if ($account !== null) {
+                throw new UsernameAlreadyInUse($name);
+            }
 
-        $contact = $createUser->contact;
-        $user = $this->search(new SearchUser(contact: $contact));
-        if ($user !== null) {
-            throw new ContactAlreadyInUse($contact);
-        }
+            $contact = $createUser->contact;
+            $user = $this->search(new SearchUser(contact: $contact));
+            if ($user !== null) {
+                throw new ContactAlreadyInUse($contact);
+            }
 
-        $password = $createUser->password;
+            $password = $createUser->password;
 
-        $user = new User(['name' => $name, 'password' => $password]);
-        $user->accounts()->create(['name' => $name]);
-        $user->contacts()->create(['type' => $contact->type, 'value' => $contact->value]);
+            $user = User::create(['name' => $name, 'password' => $password]);
 
-        $user->save() ?: throw new UserSavingException('User not saved');
+            $user->accounts()->save(new Account(['name' => $name]));
+            $user->contacts()->create(['type' => $contact->type, 'value' => $contact->value]);
 
-        return $user;
+            $user->save() ?: throw new UserSavingException('User not saved');
+
+            return $user;
+        });
     }
 
     public function search(SearchUser $search): ?User

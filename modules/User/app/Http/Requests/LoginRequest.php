@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login' => ['required', 'string', LoginRule::class],
+            'login' => ['required', 'string', new LoginRule()],
             'password' => 'required|string|min:5|max:20',
         ];
     }

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\User\Services;
 
-use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Session\Session;
-use Modules\User\Exceptions\UserSavingException;
 use Modules\User\Exceptions\WrongCredentialsException;
 use Modules\User\Exceptions\WrongGuardException;
 use Modules\User\Models\User;
@@ -53,10 +51,11 @@ final readonly class UserAuthService
      */
     public function login(Login $login): User
     {
-        $user = $this->userService->search(SearchUser::from($login->toArray()))
+        $user = $this->userService->search(new SearchUser(name: $login->login))
+            ?? $this->userService->search(new SearchUser(contact: ContactData::email($login->login)))
             ?? throw new WrongCredentialsException();
 
-        $this->auth->attempt(['id' => $user->id, 'password' => $login->password])
+        $this->auth->attempt(['name' => $user->name, 'password' => $login->password])
             ? $this->session->regenerate()
             : throw new WrongCredentialsException();
 
@@ -70,7 +69,7 @@ final readonly class UserAuthService
         $this->session->regenerateToken();
     }
 
-    public function user(): Authenticatable
+    public function user(): ?Authenticatable
     {
         return $this->auth->user();
     }
