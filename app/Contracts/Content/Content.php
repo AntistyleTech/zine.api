@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Contracts\Content;
 
-use App\Contracts\Content\Enum\ContentStatus;
 use App\Contracts\Content\Enum\ContentType;
 
-abstract class Content
+interface Content
 {
-    public ContentType $type;
-    public ContentStatus $status;
+    public function type(): ContentType;
 
-    /** @var ContentItem[] */
-    public array $items;
+    /** @return ContentItem[] */
+    public function items(): array;
 }

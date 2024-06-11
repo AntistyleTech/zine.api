@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Social\app\Services\Tumblr\Data;
+namespace Modules\Social\Services\Tumblr\Data;
 
 use Spatie\LaravelData\Data;
 

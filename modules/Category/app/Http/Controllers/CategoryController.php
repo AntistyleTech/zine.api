@@ -2,11 +2,12 @@
 
 namespace Modules\Category\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Category\Http\Requests\CategoryIndexRequest;
 use Modules\Category\Services\CategoryService;
 
-class CategoryController
+class CategoryController extends Controller
 {
     public function __construct(
         private readonly CategoryService $categoryService

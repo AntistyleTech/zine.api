@@ -2,18 +2,41 @@
 
 declare(strict_types=1);
 
-namespace Modules\Social\app\Services\Tumblr;
+namespace Modules\Social\Services\Tumblr;
 
-use Modules\Social\app\Services\Tumblr\Data\TumblrCredentials;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Http\JsonResponse;
+use League\OAuth1\Client\Server\Server;
+use League\OAuth1\Client\Server\Tumblr;
+use Modules\Social\Services\Tumblr\Data\TumblrCredentials;
 use Tumblr\API\Client;
 
 final class TumblrService
 {
-    private Client $client;
+
+    private Server $server;
 
     public function __construct(TumblrCredentials $credentials)
     {
-        $this->client = new Client($credentials->key, $credentials->secret);
+        $this->server = new Tumblr([
+            'identifier' => $credentials->key,
+            'secret' => $credentials->secret,
+            'callback_uri' => "http://your-callback-uri/",
+        ]);
+    }
+
+    public function test(): JsonResponse
+    {
+        $temporary = $this->server->getTemporaryCredentials();
+
+        $data = [
+            $temporary->getIdentifier(),
+            $temporary->getSecret()
+        ];
+
+
+        return response()->json($data);
+
     }
 
     public function createPost(string $blogName, $data)

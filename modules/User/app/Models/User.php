@@ -2,15 +2,22 @@
 
 namespace Modules\User\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin IdeHelperUser
+ */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, Notifiable;
+    // use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +25,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
-        'email',
+        'name',
         'password',
     ];
 
@@ -33,9 +39,24 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function account(): HasOne
+    public function accounts(): BelongsToMany
     {
-        return $this->hasOne(Account::class);
+        return $this->belongsToMany(Account::class);
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    public function scopeHasVerifiedContact(Builder $query): void
+    {
+        $query->whereHas('contacts', fn (Builder $q) => $q->verified());
+    }
+
+    public function hasVerifiedEmail()
+    {
+        return $this->hasVerifiedContact();
     }
 
     /**
@@ -46,7 +67,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

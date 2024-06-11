@@ -15,7 +15,7 @@ use Modules\User\Http\Controllers\AuthController;
 */
 
 Route::controller(AuthController::class)
-    ->prefix('api/auth')
+    ->prefix('auth')
     ->group(function () {
         Route::post('register', 'register');
         Route::post('login', 'login');

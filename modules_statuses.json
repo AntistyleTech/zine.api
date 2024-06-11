@@ -1,10 +1,6 @@
 {
-    "Posts": true,
-    "Post": true,
-    "Users": true,
-    "Social": true,
-    "Categories": true,
     "User": true,
-    "Test": true,
-    "Category": true
+    "Post": true,
+    "Category": true,
+    "Social": true
 }

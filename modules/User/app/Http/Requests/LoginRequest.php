@@ -2,27 +2,12 @@
 
 namespace Modules\User\Http\Requests;
 
-use App\Auth\Http\Rules\LoginRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\User\Http\Rules\LoginRule;
 
 class LoginRequest extends FormRequest
 {
-    private LoginRule $loginRule;
-
-    public function __construct(
-        array $query = [],
-        array $request = [],
-        array $attributes = [],
-        array $cookies = [],
-        array $files = [],
-        array $server = [],
-        $content = null
-    ) {
-        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
-        $this->loginRule = new LoginRule;
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -39,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login' => ['required', 'string', $this->loginRule],
+            'login' => ['required', 'string', LoginRule::class],
             'password' => 'required|string|min:5|max:20',
         ];
     }
@@ -48,8 +33,10 @@ class LoginRequest extends FormRequest
     {
         $validated = parent::validated(null, $default);
 
-        $email = $this->loginRule->email($validated['login']);
-        $username = $this->loginRule->username($validated['login']);
+        $rule = app(LoginRule::class);
+
+        $email = $rule->email($validated['login']);
+        $username = $rule->username($validated['login']);
 
         return match ($key) {
             null => array_filter([

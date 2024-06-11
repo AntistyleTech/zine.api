@@ -2,11 +2,12 @@
 
 namespace Modules\Category\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Category\Http\Requests\TagIndexRequest;
 use Modules\Category\Services\TagService;
 
-class TagController
+class TagController extends Controller
 {
     public function __construct(
         private readonly TagService $tagService

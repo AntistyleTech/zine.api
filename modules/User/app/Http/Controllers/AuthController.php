@@ -5,27 +5,40 @@ namespace Modules\User\Http\Controllers;
 use App\Contracts\Auth\UserData;
 use App\Http\Controllers\Controller;
 use Exception;
-use Modules\User\app\Http\Requests\LoginRequest;
-use Modules\User\app\Http\Requests\RegisterRequest;
-use Modules\User\Domain\Repositories\SearchUser;
-use Services\AuthSessionService;
-use Services\Data\Login;
-use Services\Data\Register;
-use Services\UserService;
+use Modules\User\Exceptions\WrongCredentialsException;
+use Modules\User\Http\Requests\LoginRequest;
+use Modules\User\Http\Requests\RegisterRequest;
+use Modules\User\Models\User;
+use Modules\User\Services\Data\ContactData;
+use Modules\User\Services\UserAuthService;
+use Modules\User\Services\Commands\Login;
+use Modules\User\Services\Commands\Register;
+use Modules\User\Services\UserService;
 
 class AuthController extends Controller
 {
-    // TODO: add socialite auth
-
     public function __construct(
-        private readonly AuthSessionService $authService,
-        private readonly UserService $userService
+        private readonly UserAuthService $authService
     ) {
     }
 
-    public function register(RegisterRequest $request): UserData
+    /**
+     * @throws WrongCredentialsException
+     * @throws Exception
+     */
+    public function register(RegisterRequest $request): User
     {
-        return $this->userService->register(Register::from($request->validated()));
+        $validated = $request->validated();
+
+        $register = new Register(
+            name: $validated['username'],
+            contact: ContactData::email($validated['email']),
+            password: $validated['password']
+        );
+
+        $user = $this->authService->register($register);
+
+        return $user;
     }
 
     /**
@@ -35,23 +48,16 @@ class AuthController extends Controller
     {
         $login = Login::from($request->validated());
 
-        $this->authService->login($login);
-
-        return $this->userService->search(SearchUser::from($login));
+        return $this->authService->login($login);
     }
 
-    public function logout()
+    public function logout(): void
     {
         $this->authService->logout();
     }
 
-    /**
-     * @throws Exception
-     */
-    public function me(): UserData
+    public function user()
     {
-        $me = $this->authService->me();
-
-        return $me ? UserData::from($me) : throw new Exception('User not found');
+        return $this->authService->user();
     }
 }

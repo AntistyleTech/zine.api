@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auth\Http\Rules;
+namespace Modules\User\Http\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -11,7 +11,7 @@ class LoginRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (!$this->email($value) && !$this->username($value)) {
-            $fail("InvalidLoginValue: {$attribute} {$value}");
+            $fail("InvalidLoginValue: {$attribute}: {$value}");
         }
     }
 
@@ -24,8 +24,11 @@ class LoginRule implements ValidationRule
 
     public function username(string $value): ?string
     {
+        if ($this->email($value)) {
+            return null;
+        }
+
         // TODO: add username check by RegExp
-        // TODO: add check unique username in Account::username && User::username
         $isUsername = Validator::make(['username' => $value], ['username' => 'string|min:4|max:25'])->valid();
 
         return $isUsername ? $value : null;

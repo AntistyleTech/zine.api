@@ -1,9 +1,9 @@
 <?php
 
-use app\Models\Account;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\User\Models\Account;
 
 return new class extends Migration {
     /**

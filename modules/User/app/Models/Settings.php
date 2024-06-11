@@ -1,14 +1,17 @@
 <?php
 
-namespace App\User\Models;
+namespace Modules\User\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @mixin IdeHelperSettings
+ */
 class Settings extends Model
 {
-    use HasFactory;
+//    use HasFactory;
 
     public function account(): BelongsTo
     {

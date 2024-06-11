@@ -9,8 +9,7 @@ use Spatie\LaravelData\Data;
 final class Login extends Data
 {
     public function __construct(
-        public ?string $username,
-        public ?string $email,
+        public string $login,
         public string $password,
     ) {
     }

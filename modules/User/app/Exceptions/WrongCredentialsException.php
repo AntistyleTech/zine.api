@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\User\Exceptions;
 
-use App\Common\Exceptions\LogicException;
+use App\Exceptions\LogicException;
 
 final class WrongCredentialsException extends LogicException
 {

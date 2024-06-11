@@ -12,12 +12,13 @@
         "laravel/framework": "^11.0",
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
-        "laravel/socialite": "^5.12",
+        "laravel/socialite": "^5.14",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
+        "league/oauth1-client": "^1.10",
+        "league/oauth2-client": "^2.7",
         "nwidart/laravel-modules": "*",
-        "spatie/laravel-data": "^4.5",
-        "tumblr/tumblr": "^0.4.2"
+        "spatie/laravel-data": "^4.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
@@ -61,11 +62,6 @@
         ]
     },
     "extra": {
-        "laravel": {
-            "dont-discover": [
-                "laravel/telescope"
-            ]
-        },
         "merge-plugin": {
             "include": [
                 "modules/*/composer.json"

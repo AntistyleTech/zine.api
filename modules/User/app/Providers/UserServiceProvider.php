@@ -65,9 +65,20 @@ class UserServiceProvider extends ServiceProvider
     protected function registerConfig(): void
     {
         $this->publishes([
-            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php')
+            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php'),
         ], 'config');
+
         $this->mergeConfigFrom(module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower);
+
+        $this->publishes([
+            module_path($this->moduleName, 'config/auth.php') => config_path('auth.php'),
+            module_path($this->moduleName, 'config/sanctum.php'), config_path('sanctum.php'),
+            module_path($this->moduleName, 'config/sanctum.php'), config_path('services.php'),
+        ], 'config');
+
+        $this->mergeConfigFrom(module_path($this->moduleName, 'config/auth.php'), 'auth');
+        $this->mergeConfigFrom(module_path($this->moduleName, 'config/sanctum.php'), 'sanctum');
+        $this->mergeConfigFrom(module_path($this->moduleName, 'config/services.php'), 'services');
     }
 
     /**

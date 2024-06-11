@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Social\Http\Controllers\SocialController;
+use Modules\Social\Http\Controllers\TumblrController;
 
 /*
  *--------------------------------------------------------------------------
@@ -14,6 +15,6 @@ use Modules\Social\Http\Controllers\SocialController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('social', SocialController::class)->names('social');
-});
+Route::apiResource('social', SocialController::class)->only('index');
+
+Route::get('tumblr/test', [TumblrController::class, 'test']);

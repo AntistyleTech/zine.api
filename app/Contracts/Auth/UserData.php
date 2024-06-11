@@ -10,9 +10,7 @@ final class UserData extends Data
 {
     public function __construct(
         public int $userId,
-        public int $accountId,
-        /** @var int[] $accounts */
-        public array $accounts
+        public int $accountId
     ) {
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Social\app\Services;
+namespace Modules\Social\Services;
 
 enum SocialNetwork: string
 {

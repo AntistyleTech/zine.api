@@ -1,36 +1,28 @@
 <?php
 
-namespace App\User\Models;
+namespace Modules\User\Models;
 
-use App\Auth\Models\User;
-use App\Content\Models\Content;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @mixin IdeHelperAccount
+ */
 class Account extends Model
 {
-    use HasFactory;
+//    use HasFactory;
 
-    public function user(): BelongsTo
+    public function users(): BelongsToMany
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function contents(): HasMany
-    {
-        return $this->hasMany(Content::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function settings(): HasMany
     {
         return $this->hasMany(Settings::class);
-    }
-
-    public function setting(): HasOne
-    {
-        return $this->hasOne(Settings::class, 'id', 'settings_id')->ofMany();
     }
 }
