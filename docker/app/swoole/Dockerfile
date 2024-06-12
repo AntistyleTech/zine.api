@@ -1,4 +1,4 @@
-FROM php:8.3-cli as base
+FROM php:8.2-cli as base
 
 ARG UID=1000
 ARG GID=1000
@@ -17,6 +17,7 @@ RUN apt-get update \
     git \
     libpq-dev \
     procps \
+    libbrotli-dev \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -34,7 +35,7 @@ RUN pecl install \
     redis \
     pcntl
 
-WORKDIR var/www/html
+WORKDIR /var/www/html
 
 RUN usermod -u ${UID} www-data
 RUN groupmod -g ${GID} www-data
@@ -59,8 +60,7 @@ RUN pecl install xdebug \
 
 COPY docker/app/conf.d/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
 
-# Only for chokidar
-# Required for octane --watch option
+# Install Node.js and Chokidar for file watching
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash -; \
     apt-get install -y nodejs
 
@@ -69,6 +69,7 @@ COPY --chown=www-data package-lock.json package-lock.json
 
 RUN npm install -g chokidar
 
+# Copy application files and install Composer dependencies
 COPY --chown=www-data . .
 
 USER www-data
@@ -83,24 +84,27 @@ COPY docker/app/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.c
 
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-
 FROM base AS production
 
+# Set production-specific environment variables
 ENV OPCACHE_ENABLE=1
 ENV OPCACHE_ENABLE_CLI=1
 ENV OPCACHE_JIT=tracing
 
 ENV APP_ENV=production
 
+# Copy application files and set permissions
 COPY --chown=$UID:$GID . .
 
 RUN chmod -R 775 bootstrap/cache storage
 
+# Install Composer dependencies for production
 RUN composer install \
     --no-interaction \
     --no-dev \
     --optimize-autoloader
 
+# Cache configuration, routes, views, and events
 RUN php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache \

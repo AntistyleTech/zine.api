@@ -1,12 +1,37 @@
 name: api-local
 
 services:
+
+#  app:
+#    build:
+#      context: .
+#      dockerfile: docker/app/swoole/Dockerfile
+#    entrypoint: php artisan octane:frankenphp --max-requests=1
+#    hostname: api
+#    environment:
+#      APP_ENV: local
+#      PHP_IDE_CONFIG: "serverName=api.host.local"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.api.rule=Host(`api.host.local`)"
+#      - "traefik.http.routers.api.service=api"
+#      - "traefik.http.services.api.loadbalancer.server.port=8000"
+#    ports:
+#      - "8000:8000"
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - pgsql
+#    networks:
+#      - api
+#      - reverse-proxy
+
   app:
     build:
       context: .
       args:
-        SUPERVISOR_PHP_COMMAND: "php -d variables_order=EGPCS /app/artisan octane:start --host=0.0.0.0 --port=8000 --watch"
-      dockerfile: docker/app/frankenphp/Dockerfile
+        SUPERVISOR_PHP_COMMAND: "php -d variables_order=EGPCS /var/www/html/artisan octane:start --host=0.0.0.0 --port=8000 --watch"
+      dockerfile: docker/app/swoole/Dockerfile
       target: local
     hostname: api
     environment:
@@ -20,12 +45,14 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - .:/app
+      - .:/var/www/html
     depends_on:
       - pgsql
     networks:
       - api
       - reverse-proxy
+
+
 
   #  schedule:
   #    build:

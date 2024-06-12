@@ -28,5 +28,4 @@ modules/Test
 stubs
 
 /caddy
-frankenphp
 frankenphp-worker.php
