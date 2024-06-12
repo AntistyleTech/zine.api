@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace Modules\Social\Services\Tumblr;
 
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\JsonResponse;
 use League\OAuth1\Client\Server\Server;
 use League\OAuth1\Client\Server\Tumblr;
-use Modules\Social\Services\Tumblr\Data\TumblrCredentials;
-use Tumblr\API\Client;
+use Modules\Social\Services\Tumblr\Data\TumblrAppCredentials;
 
 final class TumblrService
 {
-
     private Server $server;
 
-    public function __construct(TumblrCredentials $credentials)
+    public function __construct(TumblrAppCredentials $credentials)
     {
         $this->server = new Tumblr([
             'identifier' => $credentials->key,
             'secret' => $credentials->secret,
-            'callback_uri' => "http://your-callback-uri/",
+            'callback_uri' => 'http://your-callback-uri/',
         ]);
     }
 
@@ -31,9 +28,8 @@ final class TumblrService
 
         $data = [
             $temporary->getIdentifier(),
-            $temporary->getSecret()
+            $temporary->getSecret(),
         ];
-
 
         return response()->json($data);
 

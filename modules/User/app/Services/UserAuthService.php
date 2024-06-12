@@ -27,7 +27,7 @@ final readonly class UserAuthService
         private Session $session,
         private UserService $userService
     ) {
-        if (!$this->auth instanceof StatefulGuard) {
+        if (! $this->auth instanceof StatefulGuard) {
             throw new WrongGuardException(
                 expected: StatefulGuard::class,
                 provided: $this->auth::class

@@ -26,3 +26,7 @@ _ide_helper_models.php
 /public/vendor/telescope
 modules/Test
 stubs
+
+/caddy
+frankenphp
+frankenphp-worker.php

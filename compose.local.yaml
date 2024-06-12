@@ -5,8 +5,8 @@ services:
     build:
       context: .
       args:
-        SUPERVISOR_PHP_COMMAND: "php -d variables_order=EGPCS /var/www/html/artisan octane:start --host=0.0.0.0 --port=8000 --watch"
-      dockerfile: docker/app/Dockerfile
+        SUPERVISOR_PHP_COMMAND: "php -d variables_order=EGPCS /app/artisan octane:start --host=0.0.0.0 --port=8000 --watch"
+      dockerfile: docker/app/frankenphp/Dockerfile
       target: local
     hostname: api
     environment:
@@ -20,50 +20,50 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - .:/var/www/html
+      - .:/app
     depends_on:
       - pgsql
     networks:
       - api
       - reverse-proxy
 
-#  schedule:
-#    build:
-#      context: .
-#      dockerfile: docker/app/Dockerfile
-#      target: local
-#      args:
-#        SUPERVISOR_PHP_COMMAND: "php artisan schedule:work"
-#    restart: unless-stopped
-#    environment:
-#      APP_ENV: local
-#    volumes:
-#      - .:/app
-#    depends_on:
-#      - pgsql
-#      - redis
-#      - mailpit
-#    networks:
-#      - api
-#
-#  queue:
-#    build:
-#      context: .
-#      target: local
-#      dockerfile: docker/app/Dockerfile
-#      args:
-#        SUPERVISOR_PHP_COMMAND: "php artisan queue:work --tries=3"
-#    restart: unless-stopped
-#    environment:
-#      APP_ENV: local
-#    volumes:
-#      - .:/app
-#    depends_on:
-#      - pgsql
-#      - redis
-#      - mailpit
-#    networks:
-#      - api
+  #  schedule:
+  #    build:
+  #      context: .
+  #      dockerfile: docker/app/Dockerfile
+  #      target: local
+  #      args:
+  #        SUPERVISOR_PHP_COMMAND: "php artisan schedule:work"
+  #    restart: unless-stopped
+  #    environment:
+  #      APP_ENV: local
+  #    volumes:
+  #      - .:/app
+  #    depends_on:
+  #      - pgsql
+  #      - redis
+  #      - mailpit
+  #    networks:
+  #      - api
+  #
+  #  queue:
+  #    build:
+  #      context: .
+  #      target: local
+  #      dockerfile: docker/app/Dockerfile
+  #      args:
+  #        SUPERVISOR_PHP_COMMAND: "php artisan queue:work --tries=3"
+  #    restart: unless-stopped
+  #    environment:
+  #      APP_ENV: local
+  #    volumes:
+  #      - .:/app
+  #    depends_on:
+  #      - pgsql
+  #      - redis
+  #      - mailpit
+  #    networks:
+  #      - api
 
   pgsql:
     image: postgres:16.1-alpine

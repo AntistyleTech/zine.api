@@ -2,7 +2,6 @@
 
 namespace Modules\User\Http\Controllers;
 
-use App\Contracts\Auth\UserData;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -10,11 +9,10 @@ use Modules\User\Exceptions\WrongCredentialsException;
 use Modules\User\Http\Requests\LoginRequest;
 use Modules\User\Http\Requests\RegisterRequest;
 use Modules\User\Models\User;
-use Modules\User\Services\Data\ContactData;
-use Modules\User\Services\UserAuthService;
 use Modules\User\Services\Commands\Login;
 use Modules\User\Services\Commands\Register;
-use Modules\User\Services\UserService;
+use Modules\User\Services\Data\ContactData;
+use Modules\User\Services\UserAuthService;
 
 class AuthController extends Controller
 {

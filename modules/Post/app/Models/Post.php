@@ -11,17 +11,18 @@ use Modules\Category\Models\Traits\Taggable;
  */
 class Post extends Model
 {
-    use Taggable, Categorisable;
-//    use HasFactory;
-//
-//    /**
-//     * The attributes that are mass assignable.
-//     */
-//    protected $fillable = [];
-//
-//    protected static function newFactory(): PostFactory
-//    {
-//        return PostFactory::new();
-//    }
+    use Categorisable, Taggable;
+
+    //    use HasFactory;
+    //
+    //    /**
+    //     * The attributes that are mass assignable.
+    //     */
+    //    protected $fillable = [];
+    //
+    //    protected static function newFactory(): PostFactory
+    //    {
+    //        return PostFactory::new();
+    //    }
 
 }

@@ -13,4 +13,5 @@ enum ContactType: string
 
     case Email = 'Email';
     case Telegram = 'Telegram';
+    case Github = 'Github';
 }

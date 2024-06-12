@@ -21,6 +21,7 @@ class SocialController extends Controller
         );
 
         $service = new TumblrService($credentials);
+
         return $service->test();
     }
 

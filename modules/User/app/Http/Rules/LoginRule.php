@@ -10,7 +10,7 @@ class LoginRule implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!$this->email($value) && !$this->username($value)) {
+        if (! $this->email($value) && ! $this->username($value)) {
             $fail("InvalidLoginValue: {$attribute}: {$value}");
         }
     }

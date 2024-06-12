@@ -2,11 +2,10 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
-abstract class LogicException extends Exception implements HttpExceptionInterface
+abstract class LogicException extends \LogicException implements HttpExceptionInterface
 {
     public function __construct(
         string $message = 'LogicException',

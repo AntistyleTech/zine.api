@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'server' => env('OCTANE_SERVER', 'roadrunner'),
+    'server' => env('OCTANE_SERVER', 'frankenphp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -185,10 +185,9 @@ return [
 
     'watch' => [
         'app',
-        'modules',
         'bootstrap',
-        'config',
-        'database',
+        'config/**/*.php',
+        'database/**/*.php',
         'public/**/*.php',
         'resources/**/*.php',
         'routes',

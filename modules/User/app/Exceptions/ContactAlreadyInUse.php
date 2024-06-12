@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Modules\User\Exceptions;
 
 use App\Exceptions\LogicException;
-use Modules\User\Enum\ContactType;
 use Modules\User\Services\Data\ContactData;
-use Throwable;
 
 final class ContactAlreadyInUse extends LogicException
 {

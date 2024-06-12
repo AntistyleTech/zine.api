@@ -9,5 +9,6 @@ use App\Contracts\Content\Enum\ContentItemType;
 interface ContentItem
 {
     public function type(): ContentItemType;
+
     public function data(): mixed;
 }

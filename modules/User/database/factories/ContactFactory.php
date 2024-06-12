@@ -6,5 +6,4 @@ namespace Modules\User\Database\Factories;
 
 final class ContactFactory
 {
-
 }

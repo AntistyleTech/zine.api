@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Modules\User\Services;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Modules\User\Exceptions\ContactAlreadyInUse;
 use Modules\User\Exceptions\UsernameAlreadyInUse;
 use Modules\User\Exceptions\UserSavingException;
 use Modules\User\Models\Account;
-use Modules\User\Models\Contact;
 use Modules\User\Models\User;
 use Modules\User\Services\Commands\CreateUser;
 use Modules\User\Services\Commands\SearchUser;
-use Modules\User\Services\Data\ContactData;
 
 final readonly class UserService
 {
@@ -62,17 +59,17 @@ final readonly class UserService
 
         $user = User::when(
             $search->id,
-            fn($query) => $query->where('id', $search->id)
+            fn ($query) => $query->where('id', $search->id)
         )->when(
             $search->contact,
-            fn($query) => $query->whereHas(
+            fn ($query) => $query->whereHas(
                 'contacts',
-                fn($q) => $q->where('type', $search->contact->type->value)
+                fn ($q) => $q->where('type', $search->contact->type->value)
                     ->where('value', $search->contact->value)
             )
         )->when(
             $search->name,
-            fn($query) => $query->where('name', $search->name)
+            fn ($query) => $query->where('name', $search->name)
         )->first();
 
         return $user;

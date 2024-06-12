@@ -1,6 +1,6 @@
 {
-    "User": true,
-    "Post": true,
-    "Category": true,
-    "Social": true
+  "User": true,
+  "Post": true,
+  "Category": true,
+  "Social": true
 }
