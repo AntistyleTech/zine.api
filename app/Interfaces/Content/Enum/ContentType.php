@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Content\Enum;
+namespace App\Interfaces\Content\Enum;
 
 use App\Enum\HasEnumNames;
 use App\Enum\HasEnumValues;

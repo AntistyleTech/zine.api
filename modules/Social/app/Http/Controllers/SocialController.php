@@ -5,7 +5,6 @@ namespace Modules\Social\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Modules\Social\Services\Tumblr\Data\TumblrCredentials;
 use Modules\Social\Services\Tumblr\TumblrService;
 
 class SocialController extends Controller
@@ -15,14 +14,7 @@ class SocialController extends Controller
      */
     public function index()
     {
-        $credentials = new TumblrCredentials(
-            key: '63mdOtFi04UG3K7EBH3UBZT9WANYXc1Q7MZ5TjMe569kol9GFo',
-            secret: 'show'
-        );
-
-        $service = new TumblrService($credentials);
-
-        return $service->test();
+        return [];
     }
 
     /**

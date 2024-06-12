@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Contracts\Content;
+namespace App\Interfaces\Content;
 
-use App\Contracts\Content\Enum\ContentItemType;
+use App\Interfaces\Content\Enum\ContentItemType;
 
 interface ContentItem
 {

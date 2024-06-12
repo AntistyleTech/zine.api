@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Contracts\Auth;
+namespace App\Interfaces\Auth;
 
 use App\Enum\HasEnumNames;
 use App\Enum\HasEnumValues;
