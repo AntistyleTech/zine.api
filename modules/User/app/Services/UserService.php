@@ -16,7 +16,7 @@ use Modules\User\Services\Commands\SearchUser;
 final readonly class UserService
 {
     /**
-     * @throws ContactAlreadyInUse|UsernameAlreadyInUse|UserSavingException
+     * @throws ContactAlreadyInUse|UsernameAlreadyInUse|UserSavingException|\Throwable
      */
     public function create(CreateUser $createUser): User
     {

@@ -1,7 +1,6 @@
 name: api-local
 
 services:
-
   app:
     build:
       context: .

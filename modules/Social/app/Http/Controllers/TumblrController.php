@@ -53,51 +53,6 @@ class TumblrController extends Controller
 
     public function sendPost(Request $request)
     {
-        $tokenData = '{"token_type":"bearer","scope":"write","id_token":false,"access_token":"a7gxF6ydMkYszf3XMDkXINZhbC14Jya9BrVwplmBszKSte2xQr","expires":1718126911}';
-        $tokenData = json_decode($tokenData, true);
-
-        $token = (new AccessToken($tokenData));
-        $blogIdentifier = 'nstsmalinovskaa';
-        //TODO: $token->hasExpired();
-
-        $content = [
-            "content" => [
-                [
-                    "type" => "image",
-                    "media" => [
-                        [
-                            "type" => "image/jpeg",
-                            "url" => "https://images.unsplash.com/photo-1718049720096-7f1af82d69af?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                            "width" => "1280",
-                            "height" => "1073",
-                        ]
-                    ],
-                ]
-            ]
-        ];
-
-        $requestUrl = "https://api.tumblr.com/v2/blog/$blogIdentifier/posts";
-        $options = [
-            'headers' => [
-                'Authorization' => 'Bearer '.$token,
-                'Content-Type' => 'application/json'
-            ],
-            'json' => $content
-        ];
-        $client = new Client();
-        try {
-            // Отправляем POST запрос
-            $response = $client->request('POST', $requestUrl, $options);
-// Возвращаем тело ответа
-            return response()->json(json_decode($response->getBody()->getContents(), true));
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            // Обработка ошибок клиента
-            $responseBody = $e->getResponse()->getBody()->getContents();
-            return response()->json(json_decode($responseBody, true), 400);
-        } catch (\Throwable $t) {
-            // Обработка других ошибок
-            return response()->json(['error' => $t->getMessage()], 500);
-        }
-
+        $this->tumblrService->posts();
     }
 }

@@ -8,6 +8,6 @@ interface UserData
 {
     public function id(): int;
 
-    //* @var <integer, Role>[] */
+    /* @return array<int, Role> */
     public function accounts(): array;
 }
