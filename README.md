@@ -61,9 +61,11 @@ App server use Laravel
 Octane [Read about Dependency Injection and Octane](https://laravel.com/docs/11.x/octane#dependency-injection-and-octane)
 
 Laravel App developed using [LaravelModules](https://github.com/nWidart/laravel-modules)
+
 All artisan module commands listed [here](https://laravelmodules.com/docs/v11/artisan-commands)
 
 All modules stored in /modules (Modules\*)
+
 Laravel application dir /app (App\*) folder used for shared abstract classes and interfaces
 
 Available make commands are listed in the [Makefile](Makefile)
