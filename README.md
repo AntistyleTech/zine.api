@@ -60,7 +60,8 @@ make exec container=app uid=1000 gid=1000 env=local
 App server use Laravel
 Octane [Read about Dependency Injection and Octane](https://laravel.com/docs/11.x/octane#dependency-injection-and-octane)
 
-Laravel App developed using [LaravelModules](https://github.com/nWidart/laravel-modules)
+Laravel App developed using [LaravelModules](https://github.com/nWidart/laravel-modules) 
+[LaravelModulesDocs](https://laravelmodules.com/docs/v11)
 
 All artisan module commands listed [here](https://laravelmodules.com/docs/v11/artisan-commands)
 

@@ -14,6 +14,6 @@ final class TumblrService
 
     public function posts(TumblrNeuePostData $post)
     {
-        $this->tumblrApi->posts($post->toArray(), $tumblrUser);
+        $this->tumblrApi->posts($post->toArray());
     }
 }
