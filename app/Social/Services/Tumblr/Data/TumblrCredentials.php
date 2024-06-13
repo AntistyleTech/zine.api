@@ -9,7 +9,9 @@ use Spatie\LaravelData\Data;
 final class TumblrCredentials extends Data
 {
     public function __construct(
-        public string $key,
-        public ?string $secret = null
+        public string $consumerKey,
+        public ?string $consumerSecret = null,
+//        public ?string $token = null,
+//        public ?string $secret = null
     ) { }
 }
