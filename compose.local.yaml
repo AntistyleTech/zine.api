@@ -6,11 +6,12 @@ services:
       context: .
       args:
         SUPERVISOR_PHP_COMMAND: "php -d variables_order=EGPCS /var/www/html/artisan octane:start --host=0.0.0.0 --port=8000 --watch"
-      dockerfile: docker/app/Dockerfile
+      dockerfile: docker/app/swoole/Dockerfile
       target: local
     hostname: api
     environment:
       APP_ENV: local
+      PHP_IDE_CONFIG: "serverName=api.host.local"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.host.local`)"
@@ -26,43 +27,45 @@ services:
       - api
       - reverse-proxy
 
-#  schedule:
-#    build:
-#      context: .
-#      dockerfile: docker/app/Dockerfile
-#      target: local
-#      args:
-#        SUPERVISOR_PHP_COMMAND: "php artisan schedule:work"
-#    restart: unless-stopped
-#    environment:
-#      APP_ENV: local
-#    volumes:
-#      - .:/app
-#    depends_on:
-#      - pgsql
-#      - redis
-#      - mailpit
-#    networks:
-#      - api
-#
-#  queue:
-#    build:
-#      context: .
-#      target: local
-#      dockerfile: docker/app/Dockerfile
-#      args:
-#        SUPERVISOR_PHP_COMMAND: "php artisan queue:work --tries=3"
-#    restart: unless-stopped
-#    environment:
-#      APP_ENV: local
-#    volumes:
-#      - .:/app
-#    depends_on:
-#      - pgsql
-#      - redis
-#      - mailpit
-#    networks:
-#      - api
+
+
+  #  schedule:
+  #    build:
+  #      context: .
+  #      dockerfile: docker/app/Dockerfile
+  #      target: local
+  #      args:
+  #        SUPERVISOR_PHP_COMMAND: "php artisan schedule:work"
+  #    restart: unless-stopped
+  #    environment:
+  #      APP_ENV: local
+  #    volumes:
+  #      - .:/app
+  #    depends_on:
+  #      - pgsql
+  #      - redis
+  #      - mailpit
+  #    networks:
+  #      - api
+  #
+  #  queue:
+  #    build:
+  #      context: .
+  #      target: local
+  #      dockerfile: docker/app/Dockerfile
+  #      args:
+  #        SUPERVISOR_PHP_COMMAND: "php artisan queue:work --tries=3"
+  #    restart: unless-stopped
+  #    environment:
+  #      APP_ENV: local
+  #    volumes:
+  #      - .:/app
+  #    depends_on:
+  #      - pgsql
+  #      - redis
+  #      - mailpit
+  #    networks:
+  #      - api
 
   pgsql:
     image: postgres:16.1-alpine

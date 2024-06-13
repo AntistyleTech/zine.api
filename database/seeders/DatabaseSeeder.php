@@ -2,11 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Account\Models\Account;
-use App\Auth\Models\User;
-use App\Content\Models\Content;
-use App\Content\Models\ContentItem;
-use App\Post\Models\Post;
 use Illuminate\Database\Seeder;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,12 +14,5 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-
-        User::factory()->count(3)
-            ->has(Account::factory()->count(1)
-                ->has(Post::factory()->count(3)
-                    ->has(ContentItem::factory()->count(3))
-                )
-            )->create();
     }
 }
