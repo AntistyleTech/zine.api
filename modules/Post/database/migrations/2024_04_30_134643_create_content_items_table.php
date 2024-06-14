@@ -1,6 +1,5 @@
 <?php
 
-use App\Contracts\Content\Enum\ContentItemType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +15,7 @@ return new class extends Migration
         Schema::create('content_items', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Post::class);
-            $table->enum('type', array_map(fn (ContentItemType $type) => $type->value, ContentItemType::cases()));
+            $table->string('type');
             $table->text('data');
             $table->timestamps();
         });
