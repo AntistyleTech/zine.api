@@ -13,9 +13,9 @@ Route::prefix('social')->group(function () {
         'prefix' => 'tumblr',
         'controller' => TumblrController::class
     ], function () {
-        Route::get('auth');
-        Route::get('auth_confirmed');
-        Route::get('user');
+        Route::get('auth', 'auth');
+        Route::get('auth_confirmed', 'authConfirmed');
+        Route::get('user', 'user');
     });
 
 });

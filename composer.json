@@ -33,7 +33,8 @@
     "nunomaduro/collision": "^8.0",
     "phpunit/phpunit": "^10.5",
     "spatie/laravel-ignition": "^2.4",
-    "spatie/laravel-typescript-transformer": "^2.4"
+    "spatie/laravel-typescript-transformer": "^2.4",
+    "ext-xdebug": "*"
   },
   "autoload": {
     "psr-4": {

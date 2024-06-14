@@ -12,6 +12,16 @@ class SocialServiceProvider extends ServiceProvider
     protected string $moduleNameLower = 'social';
 
     /**
+     * Register the service provider.
+     */
+    public function register(): void
+    {
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(TumblrServiceProvider::class);
+    }
+
+    /**
      * Boot the application events.
      */
     public function boot(): void
@@ -101,15 +111,6 @@ class SocialServiceProvider extends ServiceProvider
         }
 
         return $paths;
-    }
-
-    /**
-     * Register the service provider.
-     */
-    public function register(): void
-    {
-        $this->app->register(EventServiceProvider::class);
-        $this->app->register(RouteServiceProvider::class);
     }
 
     /**

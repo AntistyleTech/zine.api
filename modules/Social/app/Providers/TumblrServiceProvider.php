@@ -6,17 +6,15 @@ use Illuminate\Support\ServiceProvider;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\GenericProvider;
 use Modules\Social\Services\Tumblr\TumblrApi;
-use Modules\Social\Services\Tumblr\TumblrAuthService;
-use Modules\Social\Services\Tumblr\TumblrService;
 
 class TumblrServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
      */
-    public function register(): void
+    public function boot(): void
     {
-        $this->app->when([TumblrApi::class, TumblrAuthService::class])
+        $this->app->when([TumblrApi::class])
             ->needs(AbstractProvider::class)
             ->give(fn() => $this->resolveAuthProvider());
     }

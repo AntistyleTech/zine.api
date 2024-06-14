@@ -11,7 +11,7 @@ services:
     hostname: api
     environment:
       APP_ENV: local
-      PHP_IDE_CONFIG: "serverName=api.host.local"
+      #PHP_IDE_CONFIG: "serverName=api.host.local"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.host.local`)"

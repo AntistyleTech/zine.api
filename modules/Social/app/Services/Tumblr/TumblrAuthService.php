@@ -8,12 +8,12 @@ use Illuminate\Contracts\Session\Session;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
 
-final readonly class TumblrAuthService
+final class TumblrAuthService
 {
-    private const oauthStateKey = 'tumblr:oauth2state';
+    private string $oauthStateKey = 'tumblr:oauth2state';
 
     public function __construct(
-        private AbstractProvider $provider,
+        private TumblrApi $api,
         private Session $session
     ) {
     }
@@ -22,38 +22,27 @@ final readonly class TumblrAuthService
     {
         $options = ['scope' => ['write']];
 
+        $url = $this->api->getAuthorizationUrl($options);
+
         $this->session->put(
-            self::oauthStateKey,
-            $this->provider->getState()
+            $this->oauthStateKey,
+            $this->api->providerState()
         );
 
-        return $this->provider->getAuthorizationUrl($options);
+        return $url;
     }
 
-    public function authConfirmed(string $state, string $code): void
+    public function authConfirmed(string $state, string $code)
     {
-        $savedState = $this->session->get(self::oauthStateKey);
+        $savedState = $this->session->get($this->oauthStateKey);
 
         if ($state !== $savedState) {
             throw new \Exception('Invalid OAuth state');
         }
 
-        $accessToken = $this->provider->getAccessToken(
-            'authorization_code',
-            ['code' => $code]
-        );
+        $accessToken = $this->api->getAccessToken('authorization_code', $code);
+        dd($accessToken->getToken());
 
         // save token
-    }
-
-    public function getUserInfo()
-    {
-        $tokenData = '{"token_type":"bearer","scope":"basic","id_token":false,"access_token":"aioREE6tV9a85peMtvxdy7TJi4IdtbBpnkXFabiyvubGcnjfiD","expires":1718008318}';
-        $tokenData = json_decode($tokenData, true);
-
-        $token = new AccessToken($tokenData);
-        $resourceOwner = $this->provider->getResourceOwner($token);
-
-        // return resource owner data
     }
 }

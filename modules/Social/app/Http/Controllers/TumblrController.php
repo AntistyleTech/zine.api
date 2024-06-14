@@ -3,6 +3,7 @@
 namespace Modules\Social\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use League\OAuth2\Client\Token\AccessToken;
@@ -39,7 +40,7 @@ class TumblrController extends Controller
         return response('', 201);
     }
 
-    public function getUserInfo()
+    public function user(): JsonResponse
     {
         // TODO: get token by User
         $tokenData = '{"token_type":"bearer","scope":"basic","id_token":false,"access_token":"aioREE6tV9a85peMtvxdy7TJi4IdtbBpnkXFabiyvubGcnjfiD","expires":1718008318}';
