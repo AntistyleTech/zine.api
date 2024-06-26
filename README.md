@@ -13,6 +13,19 @@ Configure your local hosts by editing the `/etc/hosts` file. For instance:
 127.0.0.1 web.host.local
 ```
 
+To handle external callbacks you will need a public url 
+
+You can use ngrok:
+
+```bash
+ngrok http --host-header=api.host.local 80
+```
+
+Set a public domain add to .env.local 
+```dotenv
+TUNNEL_DOMAIN=https://XXX-XXX-XXX-XXX.ngrok-free.app
+```
+
 Make sure that you have make, docker and docker compose installed on the host system
 
 Clone and install Traefik container [proxy](https://github.com/AntistyleTech/zine.proxy)

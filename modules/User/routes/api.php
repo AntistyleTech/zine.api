@@ -9,5 +9,5 @@ Route::controller(AuthController::class)
         Route::post('register', 'register');
         Route::post('login', 'login');
         Route::post('logout', 'logout');
-        Route::get('me', 'me');
+        Route::get('me', 'user');
     });

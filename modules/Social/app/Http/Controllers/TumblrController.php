@@ -6,36 +6,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 use League\OAuth2\Client\Token\AccessToken;
-use Modules\Social\Services\Tumblr\TumblrAuthService;
 use Modules\Social\Services\Tumblr\TumblrService;
 
 class TumblrController extends Controller
 {
     public function __construct(
-        private TumblrService $tumblrService,
-        private TumblrAuthService $tumblrAuthService
+        private TumblrService $tumblrService
     ) {
     }
 
     public function auth(): RedirectResponse
     {
-        $authorizationUrl = $this->tumblrAuthService->auth();
-
-        return redirect($authorizationUrl);
+        return Socialite::driver('tumblr')->redirect();
     }
 
     public function authConfirmed(Request $request)
     {
-        $request->validate([
-            'state' => 'required|string',
-            'code' => 'required|string'
-        ]);
+        $tumblrUser = Socialite::driver('tumblr')
+            ->user();
 
-        $state = $request->get('state');
-        $code = $request->get('code');
+        $appUser = Auth::user();
 
-        $this->tumblrAuthService->authConfirmed($code, $state);
+        dd($tumblrUser, $appUser);
 
         return response('', 201);
     }
@@ -47,6 +42,7 @@ class TumblrController extends Controller
         $tokenData = json_decode($tokenData, true);
 
         $token = new AccessToken($tokenData);
+        $this->tumblrService->user();
         $resourceOwner = $this->provider->getResourceOwner($token);
 
         return response()->json($resourceOwner->toArray());

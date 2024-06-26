@@ -10,6 +10,13 @@ final class TumblrService
 {
     public function __construct(private TumblrApi $tumblrApi)
     {
+
+    }
+
+
+    public function user()
+    {
+
     }
 
     public function posts(TumblrNeuePostData $post)
