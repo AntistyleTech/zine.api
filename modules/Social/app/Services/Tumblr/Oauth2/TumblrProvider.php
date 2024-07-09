@@ -20,15 +20,15 @@ class TumblrProvider extends AbstractProvider implements ProviderInterface
         return 'https://api.tumblr.com/v2/oauth2/token';
     }
 
-    public function getAccessToken(string $code)
-    {
-        $response = $this->getHttpClient()->post($this->getTokenUrl(), [
-            'headers' => ['Authorization' => 'Basic '.base64_encode($this->clientId.':'.$this->clientSecret)],
-            'form_params' => $this->getTokenFields($code),
-        ]);
-
-        return $this->parseAccessToken(json_decode($response->getBody()->getContents(), true));
-    }
+//    public function getAccessToken(string $code)
+//    {
+//        $response = $this->getHttpClient()->post($this->getTokenUrl(), [
+//            'headers' => ['Authorization' => 'Basic '.base64_encode($this->clientId.':'.$this->clientSecret)],
+//            'form_params' => $this->getTokenFields($code),
+//        ]);
+//
+//        return $this->parseAccessToken(json_decode($response->getBody()->getContents(), true));
+//    }
 
     protected function getTokenFields($code): array
     {
@@ -51,6 +51,7 @@ class TumblrProvider extends AbstractProvider implements ProviderInterface
 
     protected function mapUserToObject(array $user)
     {
+        // TODO: create TumblrUser
         return (new User)->setRaw($user)->map([
             'id' => $user['name'],
             'nickname' => $user['name'],
