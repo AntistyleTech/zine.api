@@ -19,13 +19,13 @@ Route::prefix('social')->group(function () {
         Route::get('user', 'user');
     });
 
-    Route::group([
-        'prefix' => 'github',
-        'controller' => GithubController::class
-    ], function () {
-        Route::get('auth', 'auth');
-        Route::get('auth_confirmed', 'authConfirmed');
-        Route::get('user', 'user');
-    });
+//    Route::group([
+//        'prefix' => 'github',
+//        'controller' => GithubController::class
+//    ], function () {
+//        Route::get('auth', 'auth');
+//        Route::get('auth_confirmed', 'authConfirmed');
+//        Route::get('user', 'user');
+//    });
 
 });

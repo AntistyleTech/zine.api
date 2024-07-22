@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 //use Modules\Social\Database\Factories\AccountFactory;
 
+/**
+ * @mixin IdeHelperSocialAccount
+ */
 class SocialAccount extends Model
 {
 //    use HasFactory;
