@@ -11,7 +11,7 @@ final class AccountData extends Data
     public ?int $id = null;
 
     public function __construct(
-        public string $username
+        public string $name
     ) {
     }
 }

@@ -36,16 +36,16 @@ class LoginRequest extends FormRequest
         $rule = app(LoginRule::class);
 
         $email = $rule->email($validated['login']);
-        $username = $rule->username($validated['login']);
+        $name = $rule->name($validated['login']);
 
         return match ($key) {
             null => array_filter([
                 ...$validated,
                 'email' => $email,
-                'username' => $username,
+                'name' => $name,
             ]),
             'email' => $email,
-            'username' => $username,
+            'name' => $name,
             default => $validated[$key] ?? $default,
         };
     }

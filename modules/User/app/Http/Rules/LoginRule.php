@@ -10,7 +10,7 @@ class LoginRule implements ValidationRule
 {
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (! $this->email($value) && ! $this->username($value)) {
+        if (! $this->email($value) && ! $this->name($value)) {
             $fail("InvalidLoginValue: {$attribute}: {$value}");
         }
     }
@@ -22,14 +22,14 @@ class LoginRule implements ValidationRule
         return $isEmail ? $value : null;
     }
 
-    public function username(string $value): ?string
+    public function name(string $value): ?string
     {
         if ($this->email($value)) {
             return null;
         }
 
         // TODO: add username check by RegExp
-        $isUsername = Validator::make(['username' => $value], ['username' => 'string|min:4|max:25'])->valid();
+        $isUsername = Validator::make(['name' => $value], ['name' => 'string|min:4|max:25'])->valid();
 
         return $isUsername ? $value : null;
     }

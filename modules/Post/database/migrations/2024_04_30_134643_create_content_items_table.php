@@ -14,7 +14,10 @@ return new class extends Migration
     {
         Schema::create('content_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Post::class);
+            $table->foreignIdFor(Post::class)
+                ->constrained('posts')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('type');
             $table->text('data');
             $table->timestamps();

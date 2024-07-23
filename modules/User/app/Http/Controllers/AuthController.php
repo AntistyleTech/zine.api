@@ -31,7 +31,7 @@ class AuthController extends Controller
         $validated = $request->validated();
 
         $register = new Register(
-            name: $validated['username'],
+            name: $validated['name'],
             contact: ContactData::email($validated['email']),
             password: $validated['password']
         );
