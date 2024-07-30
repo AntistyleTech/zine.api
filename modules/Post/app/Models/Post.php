@@ -3,6 +3,7 @@
 namespace Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Category\Models\Traits\Categorisable;
 use Modules\Category\Models\Traits\Taggable;
 
@@ -12,6 +13,8 @@ use Modules\Category\Models\Traits\Taggable;
 class Post extends Model
 {
     use Categorisable, Taggable;
+
+    protected $fillable = ['account_id', 'title', 'data'];
 
     //    use HasFactory;
     //
@@ -24,5 +27,10 @@ class Post extends Model
     //    {
     //        return PostFactory::new();
     //    }
+
+    public function contentItems(): HasMany
+    {
+        return $this->hasMany(ContentItem::class);
+    }
 
 }
