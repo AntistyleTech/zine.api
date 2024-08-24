@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
         return [
             'title' => 'sometimes|string',
             'meta' => 'sometimes|string',
-            'contentItems' => 'array',
+            'contentItems' => 'sometimes|array',
         ];
     }
 }

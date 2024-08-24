@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Post\Http\Requests\Post\StoreRequest;
 use Illuminate\Support\Facades\Auth;
+use Modules\Post\Http\Resources\Post\IndexResource;
+use Modules\Post\Http\Resources\Post\PostResource;
 use Modules\Post\Models\ContentItem;
 use Modules\Post\Models\Post;
 use Modules\User\Models\Account;
@@ -24,12 +27,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResource
     {
-        $auth = Auth::user();
-        $user = auth()->id();
-        $request->session()->all();
-        var_dump($request);
+        $accountId = 1;
+        $posts = Post::where('account_id', $accountId)->get();
+        return IndexResource::collection($posts);
     }
 
     /**
@@ -37,12 +39,11 @@ class PostController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $userId = auth()->id();
         $accountID = 1;
 
         $data = $request->validated();
-        $post = Post::create(['account_id' => $accountID, 'title' => $request->input('title'),]);
-        $contentItems = collect($request->input('contentItems'))->map(function ($item) {
+        $post = Post::create(['account_id' => $accountID, 'title' => $data->input('title'),]);
+        $contentItems = collect($data->input('contentItems'))->map(function ($item) {
             return [
                 'type' => 'EditorJS',
                 'data' => json_encode($item),
@@ -57,9 +58,10 @@ class PostController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function show($id): PostResource
     {
-        return view('post::show');
+        $post = Post::with('contentItems')->findOrFail($id);
+        return new PostResource($post);
     }
 
     /**
@@ -73,8 +75,9 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json(['message' => 'Post deleted successfully',], 204);
     }
 }

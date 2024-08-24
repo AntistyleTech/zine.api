@@ -28,6 +28,8 @@ class Post extends Model
     //        return PostFactory::new();
     //    }
 
+
+
     public function contentItems(): HasMany
     {
         return $this->hasMany(ContentItem::class);

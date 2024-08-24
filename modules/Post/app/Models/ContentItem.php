@@ -17,6 +17,13 @@ class ContentItem extends Model
      */
     protected $fillable = ['type', 'data'];
 
+    protected function casts(): array
+    {
+        return [
+            'data' => 'array',
+        ];
+    }
+
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
