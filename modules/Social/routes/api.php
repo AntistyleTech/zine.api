@@ -7,8 +7,13 @@ use Modules\Social\Http\Controllers\TumblrController;
 
 Route::prefix('social')->group(function () {
 
-    Route::apiResource('', SocialController::class)
-        ->only('index');
+    Route::controller(SocialController::class)
+        ->group(function () {
+            Route::get('', 'index');
+            Route::get('available', 'available');
+            Route::get('auth/{social}', 'auth');
+            Route::get('auth_confirmed/{social}', 'authConfirmed');
+        });
 
     Route::group([
         'prefix' => 'tumblr',

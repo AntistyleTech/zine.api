@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Account::class);
             $table->string('social_network');
-            $table->json('token');
+            $table->string('token');
             $table->json('data');
             $table->timestamps();
         });

@@ -11,8 +11,9 @@ enum Role: string
 {
     use HasEnumNames, HasEnumValues;
 
-    case Admin = 'Admin';
-    case Manager = 'Manager';
-    case VerifiedUser = 'VerifiedUser';
-    case User = 'User';
+    case Admin = 'admin';
+    case Manager = 'manager';
+    case VerifiedUser = 'verifiedUser';
+    case User = 'user';
+    case Guest = 'guest';
 }

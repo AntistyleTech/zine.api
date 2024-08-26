@@ -5,16 +5,57 @@ namespace Modules\Social\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use Laravel\Socialite\Facades\Socialite;
+use Modules\Social\Enum\SocialNetwork;
+use Modules\Social\Services\SocialService;
 use Modules\Social\Services\Tumblr\TumblrService;
 
 class SocialController extends Controller
 {
+    public function __construct(private SocialService $socialService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return [];
+        $accountId = Auth::user()->accounts->firstOrFail()->id;
+
+        return Response::json($this->socialService->getAccounts($accountId));
+    }
+
+    public function available()
+    {
+        return Response::json($this->socialService->getAvailable());
+    }
+
+    public function auth(string $social): RedirectResponse
+    {
+        $social = SocialNetwork::from($social);
+
+        return Socialite::driver($social->value)
+            ->scopes(['basic', 'write'])
+            ->redirect();
+    }
+
+    public function authConfirmed(Request $request, string $social)
+    {
+        $social = SocialNetwork::from($social);
+        $accountId = Auth::user()->accounts->firstOrFail()->id;
+        $socialUser = Socialite::driver($social->value)->user();
+
+        $socialAccount = $this->socialService->createAccount(
+            $accountId,
+            $social,
+            $socialUser->token,
+            $socialUser->user
+        );
+
+        return Response::json($socialAccount, 201);
     }
 
     /**

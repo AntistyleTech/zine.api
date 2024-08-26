@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Modules\Social\Enum;
 
+use App\Enum\HasEnumNames;
+use App\Enum\HasEnumValues;
+
 enum SocialNetwork: string
 {
-    case Tumblr = 'Tumblr';
-    case Twitter = 'Twitter';
-    case Reddit = 'Reddit';
-    case Telegram = 'Telegram';
-    case Pinterest = 'Pinterest';
-    case Flickr = 'Flickr';
-    case Discord = 'Discord';
-    case Instagram = 'Instagram';
-    case Facebook = 'Facebook';
+    use HasEnumNames, HasEnumValues;
+
+    case Tumblr = 'tumblr';
+    case Twitter = 'twitter';
+    case Reddit = 'reddit';
+    case Telegram = 'telegram';
+    case Pinterest = 'pinterest';
+    case Flickr = 'flickr';
+    case Discord = 'discord';
+    case Instagram = 'instagram';
+    case Facebook = 'facebook';
 }
