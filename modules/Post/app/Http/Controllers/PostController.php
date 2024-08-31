@@ -42,8 +42,8 @@ class PostController extends Controller
         $accountID = 1;
 
         $data = $request->validated();
-        $post = Post::create(['account_id' => $accountID, 'title' => $data->input('title'),]);
-        $contentItems = collect($data->input('contentItems'))->map(function ($item) {
+        $post = Post::create(['account_id' => $accountID, 'title' => $data['title'] ?? '',]);
+        $contentItems = collect($data['contentItems'])->map(function ($item) {
             return [
                 'type' => 'EditorJS',
                 'data' => json_encode($item),
@@ -61,6 +61,12 @@ class PostController extends Controller
     public function show($id): PostResource
     {
         $post = Post::with('contentItems')->findOrFail($id);
+
+        $post->contentItems->transform(function ($item) {
+            $item->data = json_decode($item->data, true);
+            return $item;
+        });
+
         return new PostResource($post);
     }
 

@@ -38,11 +38,10 @@ class SocialController extends Controller
         $social = SocialNetwork::from($social);
 
         return Socialite::driver($social->value)
-            ->scopes(['basic', 'write'])
             ->redirect();
     }
 
-    public function authConfirmed(Request $request, string $social)
+    public function authConfirmed(string $social)
     {
         $social = SocialNetwork::from($social);
         $accountId = Auth::user()->accounts->firstOrFail()->id;
