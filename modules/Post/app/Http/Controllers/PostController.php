@@ -3,6 +3,7 @@
 namespace Modules\Post\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\Content\Enum\ContentItemType;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class PostController extends Controller
         $post = Post::create(['account_id' => $accountID, 'title' => $data['title'] ?? '',]);
         $contentItems = collect($data['contentItems'])->map(function ($item) {
             return [
-                'type' => 'EditorJS',
+                'type' => ContentItemType::EditorJs,
                 'data' => json_encode($item),
             ];
         })->toArray();
@@ -60,6 +61,7 @@ class PostController extends Controller
      */
     public function show($id): PostResource
     {
+        /** @var Post $post */
         $post = Post::with('contentItems')->findOrFail($id);
 
         $post->contentItems->transform(function ($item) {

@@ -22,13 +22,11 @@ final readonly class UserService
     {
         return DB::transaction(function () use ($createUser): User {
             $name = $createUser->name;
-            $user = User::where('name', $name)->first();
-            if ($user !== null) {
+            if (User::where('name', $name)->exists()) {
                 throw new UsernameAlreadyInUse($name);
             }
 
-            $account = Account::where('name', $name)->first();
-            if ($account !== null) {
+            if (Account::where('name', $name)->exists()) {
                 throw new UsernameAlreadyInUse($name);
             }
 
@@ -42,7 +40,7 @@ final readonly class UserService
 
             $user = User::create(['name' => $name, 'password' => $password]);
 
-            $user->accounts()->save(new Account(['name' => $name]));
+            $user->accounts()->create(['name' => $name]);
             $user->contacts()->create(['type' => $contact->type, 'value' => $contact->value]);
 
             $user->save() ?: throw new UserSavingException('User not saved');

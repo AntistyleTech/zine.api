@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Modules\Social\Services\Tumblr;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\RequestOptions;
-use League\OAuth2\Client\Provider\AbstractProvider;
-use League\OAuth2\Client\Token\AccessToken;
-use Modules\Social\Services\Tumblr\Data\TumblrNeuePostData;
+use GuzzleHttp\Client;
+use Modules\User\Models\Account;
 
 final class TumblrApi
 {
+    private Client $client;
 
+    public function __construct(Account $account)
+    {
+        $this->client = new Client();
+    }
+
+    public function posts()
+    {
+
+    }
 }

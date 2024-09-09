@@ -14,7 +14,6 @@ enum ContentItemType: string
     case Text = 'Text';
     case Markdown = 'Markdown';
     case Html = 'Html';
-    case NuxtContent = 'NuxtContent';
     case Image = 'Image';
-    case EditorJsOutput = 'EditorJsOutput';
+    case EditorJs = 'EditorJs';
 }

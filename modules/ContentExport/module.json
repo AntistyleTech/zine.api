@@ -1,0 +1,11 @@
+{
+    "name": "ContentExport",
+    "alias": "contentexport",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ContentExport\\Providers\\ContentExportServiceProvider"
+    ],
+    "files": []
+}

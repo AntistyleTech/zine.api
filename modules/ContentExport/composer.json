@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/contentexport",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ContentExport\\": "app/",
+            "Modules\\ContentExport\\Database\\Factories\\": "database/factories/",
+            "Modules\\ContentExport\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\ContentExport\\Tests\\": "tests/"
+        }
+    }
+}
