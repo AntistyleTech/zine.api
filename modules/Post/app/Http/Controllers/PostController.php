@@ -8,8 +8,10 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Response;
 use Modules\Post\Http\Requests\Post\StoreRequest;
 use Illuminate\Support\Facades\Auth;
+use Modules\Post\Http\Requests\Post\UpdateRequest;
 use Modules\Post\Http\Resources\Post\IndexResource;
 use Modules\Post\Http\Resources\Post\PostResource;
 use Modules\Post\Models\ContentItem;
@@ -44,12 +46,13 @@ class PostController extends Controller
 
         $data = $request->validated();
         $post = Post::create(['account_id' => $accountID, 'title' => $data['title'] ?? '',]);
-        $contentItems = collect($data['contentItems'])->map(function ($item) {
+
+        $contentItems = array_map(function ($item) {
             return [
                 'type' => ContentItemType::EditorJs,
-                'data' => json_encode($item),
+                'data' => $item,
             ];
-        })->toArray();
+        }, $data['contentItems']);
 
         $post->contentItems()->createMany($contentItems);
 
@@ -62,22 +65,34 @@ class PostController extends Controller
     public function show($id): PostResource
     {
         /** @var Post $post */
+
         $post = Post::with('contentItems')->findOrFail($id);
-
-        $post->contentItems->transform(function ($item) {
-            $item->data = json_decode($item->data, true);
-            return $item;
-        });
-
         return new PostResource($post);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $data = $request->validated();
+
+        $post->update(['title' => $data['title'] ?? '']);
+
+        $contentItems = array_map(function ($item) {
+            return [
+                'type' => ContentItemType::EditorJs,
+                'data' => $item,
+            ];
+        }, $data['contentItems']);
+
+        $post->contentItems()->delete();
+
+        $post->contentItems()->createMany($contentItems);
+
+        return response()->json(['message' => 'Post updated successfully'], 201);
     }
 
     /**
@@ -86,6 +101,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return response()->json(['message' => 'Post deleted successfully',], 204);
+        return response()->json(['message' => 'Post deleted successfully'], 204);
     }
 }

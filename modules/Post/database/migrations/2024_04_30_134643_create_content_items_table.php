@@ -19,7 +19,7 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('type');
-            $table->text('data');
+            $table->json('data');
             $table->timestamps();
         });
     }

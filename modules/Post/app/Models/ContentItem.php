@@ -29,8 +29,4 @@ class ContentItem extends Model
         return $this->belongsTo(Post::class);
     }
 
-    //    protected static function newFactory(): ContentItemFactory
-    //    {
-    //        //return ContentItemFactory::new();
-    //    }
 }

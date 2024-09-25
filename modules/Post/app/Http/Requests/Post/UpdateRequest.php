@@ -23,7 +23,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'sometimes|string',
+            'meta' => 'sometimes|string',
+            'contentItems' => 'sometimes|array',
         ];
     }
 }
