@@ -26,7 +26,8 @@ class PostController extends Controller
 //    ) {
 //
 //    }
-
+    public function uploadFile()
+    {}
     /**
      * Display a listing of the resource.
      */
