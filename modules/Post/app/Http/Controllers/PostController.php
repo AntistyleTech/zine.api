@@ -18,6 +18,7 @@ use Modules\Post\Models\ContentItem;
 use Modules\Post\Models\Post;
 use Modules\User\Models\Account;
 use Modules\User\Models\User;
+use Storage;
 
 class PostController extends Controller
 {
@@ -26,8 +27,18 @@ class PostController extends Controller
 //    ) {
 //
 //    }
-    public function uploadFile()
-    {}
+    public function uploadFile(Request $request)
+    {
+        $path = $request->file('image')->store('post');
+        $url = Storage::url($path);
+
+        return response()->json([
+            'success' => 1,
+            'file' => [ 'url' => $url ],
+        ]);
+
+        return response()->json(['success' => 0, 'error' => 'File upload failed.']);
+    }
     /**
      * Display a listing of the resource.
      */

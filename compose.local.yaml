@@ -14,7 +14,7 @@ services:
       PHP_IDE_CONFIG: "serverName=localhost"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=PathPrefix(`/vendor`) || PathPrefix(`/api`) || PathPrefix(`/docs`) || PathPrefix(`/telescope`)"
+      - "traefik.http.routers.api.rule=PathPrefix(`/vendor`) || PathPrefix(`/api`) || PathPrefix(`/docs`) || PathPrefix(`/telescope`) || PathPrefix(`/storage`)"
       - "traefik.http.routers.api.service=api"
       - "traefik.http.services.api.loadbalancer.server.port=8000"
     ports:

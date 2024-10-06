@@ -15,3 +15,11 @@ use Modules\Post\Http\Controllers\PostController;
 */
 
 Route::apiResource('post', PostController::class);
+
+Route::prefix('post')->group(function () {
+
+    Route::controller(PostController::class)
+        ->group(function () {
+            Route::post('/uploadFile', 'uploadFile');
+        });
+});
