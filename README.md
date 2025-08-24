@@ -9,8 +9,7 @@
 Configure your local hosts by editing the `/etc/hosts` file. For instance:
 
 ```
-127.0.0.1 api.host.local
-127.0.0.1 web.host.local
+127.0.0.1 zine.local
 ```
 
 To handle external callbacks you will need a public url
