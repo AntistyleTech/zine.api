@@ -27,6 +27,8 @@ services:
     hostname: api
     volumes:
       - ./:/var/www/html
+    environment:
+      PHP_IDE_CONFIG: "serverName=zine"
     depends_on:
       - pgsql
     networks:

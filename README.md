@@ -12,28 +12,14 @@ Configure your local hosts by editing the `/etc/hosts` file. For instance:
 127.0.0.1 zine.local
 ```
 
-To handle external callbacks you will need a public url
-
-You can use ngrok:
-
-```bash
-ngrok http --host-header=api.host.local 80
-```
-
-Set a public domain add to .env.local
-
-```dotenv
-TUNNEL_DOMAIN=https://XXX-XXX-XXX-XXX.ngrok-free.app
-```
-
 Make sure that you have make, docker and docker compose installed on the host system
 
 Clone and install Traefik container [proxy](https://github.com/AntistyleTech/zine.proxy)
 
 ```bash
 cd ..
-git clone https://github.com/AntistyleTech/zine.proxy
-cd zine.proxy && make install
+git clone https://github.com/AntistyleTech/zine.infra
+cd zine.infra && make install
 ```
 
 Check Traefik installation
@@ -70,8 +56,6 @@ make exec
 make exec container=app uid=1000 gid=1000 env=local
 ```
 
-App server use Laravel
-Octane [Read about Dependency Injection and Octane](https://laravel.com/docs/11.x/octane#dependency-injection-and-octane)
 
 Laravel App developed using [LaravelModules](https://github.com/nWidart/laravel-modules)
 [LaravelModulesDocs](https://laravelmodules.com/docs/v11)
@@ -87,3 +71,17 @@ Available make commands are listed in the [Makefile](Makefile)
 Telescope debug assistant dashboard available at [Telescope](http://api.host.local/telescope)
 
 Api documentation available at [ApiDocs](http://api.host.local/docs/api)
+
+To handle external callbacks you will need a public url
+You can use ngrok:
+
+```bash
+ngrok http --host-header=localhost 80
+```
+
+Set a public domain add to .env.local
+
+```dotenv
+TUNNEL_DOMAIN=https://XXX-XXX-XXX-XXX.ngrok-free.app
+```
+

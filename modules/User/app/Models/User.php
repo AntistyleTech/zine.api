@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function hasVerifiedEmail()
     {
-        return $this->hasVerifiedContact();
+        return $this->contacts()->verified()->exists();
     }
 
     /**
